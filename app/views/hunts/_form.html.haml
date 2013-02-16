@@ -1,0 +1,13 @@
+= form_for @hunt do |f|
+  - if @hunt.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@hunt.errors.count, "error")} prohibited this hunt from being saved:"
+      %ul
+        - @hunt.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .actions
+    = f.submit 'Save'

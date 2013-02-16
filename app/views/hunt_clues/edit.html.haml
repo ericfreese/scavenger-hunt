@@ -1,0 +1,12 @@
+%h1 Editing clue
+
+= simple_form_for @clue, :url => hunt_clue_path(@hunt, @clue) do |f|
+  = f.input :name, :label => 'Name'
+  = f.input :description, :as => :text, :label => 'Description', :input_html => { :rows => 3 }
+  / = f.input :hunt_id, :as => :hidden, input_html: { value: @hunt.id }
+  .form-actions
+    = f.submit :value => 'Save Clue', :class => 'btn btn-primary'
+
+= link_to 'Show', @clue
+|
+= link_to 'Back', clues_path

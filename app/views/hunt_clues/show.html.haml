@@ -1,0 +1,5 @@
+%h1= @clue.name
+%p= @clue.description
+
+= link_to 'Edit', edit_hunt_clue_path(@hunt, @clue), :class => 'btn'
+= link_to 'Back to hunt', @hunt

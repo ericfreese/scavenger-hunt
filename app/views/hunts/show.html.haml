@@ -1,0 +1,21 @@
+- if !notice.nil?
+  .alert.alert-success
+    %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
+    = notice
+
+%h1= @hunt.name
+
+- if @hunt.clues.size > 0
+  %h2 Clues
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %td Name
+        %td Description
+    - @hunt.clues.each do |clue|
+      %tr
+        %td
+          = link_to clue.name, hunt_clue_path(@hunt, clue)
+        %td= clue.description
+
+  = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'

@@ -1,0 +1,19 @@
+= form_for @clue do |f|
+  - if @clue.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@clue.errors.count, "error")} prohibited this clue from being saved:"
+      %ul
+        - @clue.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :hunt
+    = f.text_field :hunt
+  .actions
+    = f.submit 'Save'

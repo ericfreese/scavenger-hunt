@@ -1,0 +1,23 @@
+%h1 Listing clues
+
+%table
+  %tr
+    %th Name
+    %th Description
+    %th Hunt
+    %th
+    %th
+    %th
+
+  - @clues.each do |clue|
+    %tr
+      %td= clue.name
+      %td= clue.description
+      %td= clue.hunt
+      %td= link_to 'Show', clue
+      %td= link_to 'Edit', edit_clue_path(clue)
+      %td= link_to 'Destroy', clue, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Clue', new_hunt_clue_path

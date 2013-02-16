@@ -1,0 +1,16 @@
+common: &common
+  adapter: postgresql
+  encoding: unicode
+
+development:
+  <<: *common
+  database: scavengerhunt_dev
+  host: localhost
+
+test:
+  <<: *common
+  database: scavengerhunt_test
+
+production:
+  <<: *common
+  database: scavengerhunt_production
