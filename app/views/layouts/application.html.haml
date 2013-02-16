@@ -32,17 +32,17 @@
               / %li= link_to "Link 2", "/path2"
               / %li= link_to "Link 3", "/path3"
             %ul.nav.pull-right
-              - if current_user.nil?
-                %li= link_to "Sign In", new_user_session_path
-                %li= link_to "Register", new_user_registration_path
-              - else
-                / = debug current_user
-                %li
+              - if user_signed_in?
+                %li.dropdown
                   %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                     %i.icon-user
                     = current_user.name
+                    %b.caret
                   %ul.dropdown-menu
                     %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
+              - else
+                %li= link_to "Sign In", new_user_session_path
+                %li= link_to "Register", new_user_registration_path
 
     .container-fluid
 
@@ -55,6 +55,10 @@
         /       %li= link_to "Link 2", "/path2"
         /       %li= link_to "Link 3", "/path3"
         .span12
+          - if !alert.nil?
+            .alert.alert-error
+              %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
+              = alert
           - if !notice.nil?
             .alert.alert-success
               %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
