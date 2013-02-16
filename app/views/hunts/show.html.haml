@@ -1,3 +1,9 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li.active= @hunt.name
+
 %h1= @hunt.name
 
 .row-fluid

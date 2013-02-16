@@ -1,5 +1,8 @@
 - content_for :breadcrumb do
   %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
     = link_to @hunt.name, @hunt
     %span.divider /
   %li.active= @clue.name
