@@ -1,18 +1,28 @@
 %h1= @hunt.name
 
-- if @hunt.clues.size > 0
-  %h2 Clues
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Name
-        %th Description
-        %th Points
-    - @hunt.clues.each do |clue|
-      %tr
-        %td
-          = link_to clue.name, hunt_clue_path(@hunt, clue)
-        %td= clue.description
-        %td= clue.point_value
+.row-fluid
+  .span4
+    %h2 Clues
+    - if @hunt.clues.size > 0
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Name
+            %th Description
+            %th Points
+        - @hunt.clues.each do |clue|
+          %tr
+            %td
+              = link_to clue.name, hunt_clue_path(@hunt, clue)
+            %td= clue.description
+            %td= clue.point_value
+    - else
+      %p No clues for you.
 
-= link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
+    = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
+
+  .span4
+    %h2 Teams
+
+  .span4
+    %h2 Judges

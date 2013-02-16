@@ -1,5 +1,7 @@
 ScavengerHunt::Application.routes.draw do
 
+  devise_for :users
+
   resources :players
 
   resources :hunts do
