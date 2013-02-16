@@ -1,9 +1,15 @@
-%h1 New clue
+- content_for :breadcrumb do
+  %li
+    = link_to @hunt.name, @hunt
+    %span.divider /
+  %li.active New Clue
 
-= simple_form_for @clue, :url => hunt_clues_path(@hunt) do |f|
+%h1 New Clue
+
+= simple_form_for @clue, :url => hunt_clues_path(@hunt), :html => { :class => 'form-horizontal' } do |f|
   = f.input :name, :label => 'Name'
   = f.input :description, :as => :text, :label => 'Description', :input_html => { :rows => 3 }
-  / = f.input :hunt_id, :as => :hidden, input_html: { value: @hunt.id }
+  = f.input :point_value, :label => 'Points'
   .form-actions
-    = f.submit :value => 'Add Clue', :class => 'btn btn-primary'
+    = f.submit :value => 'Save', :class => 'btn btn-primary'
     = link_to 'Cancel', @hunt, :class => 'btn'
