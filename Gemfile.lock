@@ -58,6 +58,10 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    devise_invitable (1.1.5)
+      actionmailer (~> 3.0)
+      devise (>= 2.1.1)
+      railties (~> 3.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -165,7 +169,8 @@ DEPENDENCIES
   binding_of_caller
   coffee-rails (~> 3.2.1)
   compass-rails (~> 1.0.3)
-  devise
+  devise (>= 2.0.0)
+  devise_invitable (~> 1.1.0)
   haml (= 3.1.6)
   haml-rails
   jquery-rails

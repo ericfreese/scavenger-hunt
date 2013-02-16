@@ -15,7 +15,8 @@
         %td= hunt.name
         %td=l hunt.created_at
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_hunt_path(hunt), :class => 'btn btn-mini'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), hunt_path(hunt), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+          = link_to 'Invite', hunt_send_invitations_path(hunt), :class => 'btn btn-mini'
+          = link_to 'Edit', edit_hunt_path(hunt), :class => 'btn btn-mini'
+          = link_to 'Destroy', hunt_path(hunt), :method => :delete, :data => { :confirm => t('.confirm', :default => t('helpers.links.confirm', :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
 
 = link_to t('.new', :default => t("helpers.links.new")), new_hunt_path, :class => 'btn btn-primary'

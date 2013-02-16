@@ -82,4 +82,8 @@ class HuntsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def send_invitations
+    @hunt = Hunt.find(params[:id])
+  end
 end

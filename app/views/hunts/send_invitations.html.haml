@@ -1,0 +1,9 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li.active= @hunt.name
+
+%h1= "Invite Friends to #{@hunt.name}"
+
+= link_to 'Edit', edit_hunt_path(@hunt)

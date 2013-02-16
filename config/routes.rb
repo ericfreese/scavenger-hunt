@@ -7,6 +7,10 @@ ScavengerHunt::Application.routes.draw do
   resources :hunts do
     resources :clues, :controller => 'hunt_clues'
     resources :teams, :controller => 'hunt_teams'
+
+    member do
+      get 'send_invitations'
+    end
   end
 
   root :to => 'home#index';
