@@ -71,6 +71,11 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
     t.string   "invited_by_type"
   end
 
+  create_table "hunts_users", :id => false, :force => true do |t|
+    t.integer :hunt_id
+    t.integer :user_id
+  end
+
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"

@@ -1,16 +1,15 @@
 ScavengerHunt::Application.routes.draw do
 
   devise_for :users
+  resources :users
 
   resources :players
 
   resources :hunts do
     resources :clues, :controller => 'hunt_clues'
+    resources :users, :controller => 'hunt_users'
     resources :teams, :controller => 'hunt_teams'
 
-    member do
-      get 'send_invitations'
-    end
   end
 
   root :to => 'home#index';

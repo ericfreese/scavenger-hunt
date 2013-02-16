@@ -1,4 +1,6 @@
 class HuntCluesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /clues
   # GET /clues.json
   def index

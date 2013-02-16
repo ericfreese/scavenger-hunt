@@ -1,0 +1,7 @@
+%h2 Invite
+
+= simple_form_for @user, :url => hunt_users_path(@hunt), :html => {:method => :post} do |f|
+  = f.input :email, :label => 'Email'
+  = f.input :name, :label => 'Name'
+
+  = f.submit 'Submit'
