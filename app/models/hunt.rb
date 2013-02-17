@@ -12,4 +12,8 @@ class Hunt < ActiveRecord::Base
     User.joins(:hunt_participants).where(:hunt_participants => { :is_judge => true, :hunt_id => self.id })
   end
 
+  def players
+    User.joins(:hunt_participants).where(:hunt_participants => { :is_judge => false, :hunt_id => self.id })
+  end
+
 end

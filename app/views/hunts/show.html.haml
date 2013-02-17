@@ -28,24 +28,24 @@
     = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
 
   .span4
-    %h2 Participants
-    - if @hunt.users.size > 0
+    %h2 Players
+    - if @hunt.players.size > 0
       %table.table.table-striped.table-condensed
         %thead
           %tr
             %th
             %th Email
             %th Name
-        - @hunt.users.each do |user|
+        - @hunt.players.each do |player|
           %tr
             %td
-              - if !user.invitation_sent_at.nil? && user.invitation_accepted_at.nil?
-                %abbr{ title: "Invitation sent #{user.invitation_sent_at}" }
+              - if !player.invitation_sent_at.nil? && player.invitation_accepted_at.nil?
+                %abbr{ title: "Invitation sent #{player.invitation_sent_at}" }
                   %i.icon-envelope
-            %td= user.email
-            %td= user.name
+            %td= player.email
+            %td= player.name
     - else
-      %p No participants yet.
+      %p No players yet.
 
     = link_to 'Invite Someone', new_hunt_user_path(@hunt), :class => 'btn'
 
