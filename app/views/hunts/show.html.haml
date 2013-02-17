@@ -28,7 +28,33 @@
     = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
 
   .span4
-    %h2 Teams
+    %h2 Participants
+    - if @hunt.users.size > 0
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Email
+            %th Name
+        - @hunt.users.each do |user|
+          %tr
+            %td= user.email
+            %td= user.name
+    - else
+      %p No participants yet.
+
+    = link_to 'Invite Someone', new_hunt_user_path(@hunt), :class => 'btn'
 
   .span4
     %h2 Judges
+    - if @hunt.judges.size > 0
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Email
+            %th Name
+        - @hunt.judges.each do |judge|
+          %tr
+            %td= judge.email
+            %td= judge.name
+    - else
+      %p No judges yet.
