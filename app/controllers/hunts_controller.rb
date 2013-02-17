@@ -4,7 +4,7 @@ class HuntsController < ApplicationController
   # GET /hunts
   # GET /hunts.json
   def index
-    @hunts = current_user.created_hunts
+    @hunts = current_user.hunts
 
     respond_to do |format|
       format.html # index.html.erb
@@ -42,7 +42,8 @@ class HuntsController < ApplicationController
   # POST /hunts
   # POST /hunts.json
   def create
-    @hunt = current_user.created_hunts.build(params[:hunt])
+    @hunt = Hunt.new(params[:hunt])
+    @hunt.hunt_participants.build(:user => current_user, :is_judge => true)
 
     respond_to do |format|
       if @hunt.save

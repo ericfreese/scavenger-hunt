@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
 
   create_table "hunts", :force => true do |t|
     t.string   "name"
-    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -71,9 +70,10 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
     t.string   "invited_by_type"
   end
 
-  create_table "hunts_users", :id => false, :force => true do |t|
-    t.integer :hunt_id
-    t.integer :user_id
+  create_table "hunt_participants", :force => true do |t|
+    t.integer :hunt_id, :null => false
+    t.integer :user_id, :null => false
+    t.boolean :is_judge, :default => false, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

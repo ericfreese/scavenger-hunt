@@ -5,9 +5,9 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :created_hunts, :class_name => 'Hunt'
 
-  has_and_belongs_to_many :hunts
+  has_many :hunt_participants
+  has_many :hunts, :through => :hunt_participants
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
