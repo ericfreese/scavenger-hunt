@@ -11,6 +11,7 @@ gem 'simple_form', '2.0.4' # Form helper
 gem 'twitter-bootstrap-rails', '2.1.6'
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '~> 1.1.0'
+gem 'cancan'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
