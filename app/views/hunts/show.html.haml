@@ -25,7 +25,8 @@
     - else
       %p No clues for you.
 
-    = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
+    - if can? :create, Clue.new(:hunt => @hunt)
+      = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
 
   .span4
     %h2 Players

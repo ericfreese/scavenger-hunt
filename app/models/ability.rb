@@ -35,8 +35,23 @@ class Ability
     # else
     #   can :read, ScavengerHunt, :users => {  }
     # end
-    can :read, Hunt do |hunt|
-      hunt.hunt_participants.exists?(:user_id => user.id)
-    end
+
+    # Anyone can create a hunt
+    can :create, Hunt
+
+    # Only can see hunts if you are a participant
+    can :read, Hunt, :hunt_participants => { :user_id => user.id }
+
+    # Only judges can update hunts
+    can :update, Hunt, :hunt_participants => { :user_id => user.id, :is_judge => true }
+
+    # Only judges can create clues
+    can :create, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
+
+    # Only participants can invite people to a hunt
+    can :create, User, :hunt => { :hunt_participants => { :user_id => user.id } }
+
+    # Only participants can view participants
+    can :read, User, :hunt => { :hunt_participants => { :user_id => user.id } }
   end
 end

@@ -1,5 +1,6 @@
 class HuntUsersController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource :user, :through => :hunt
 
   # GET /clues
   # GET /clues.json
@@ -48,12 +49,6 @@ class HuntUsersController < ApplicationController
   def create
     @hunt = Hunt.find(params[:hunt_id])
     @user = User.invite!(params[:user])
-
-    # @invite = User.invite!(@user.attributes)
-    # @user = @hunt.users.build(params[:user])
-    # @user.hunts = @hunt
-    # logger.debug @user.attributes
-    # @user = User.invite!(@hunt.users.build(params[:user]).attributes, current_user)
 
     respond_to do |format|
       if @user.errors.empty?

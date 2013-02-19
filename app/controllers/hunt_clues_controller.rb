@@ -1,5 +1,6 @@
 class HuntCluesController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource :clue, :through => :hunt
 
   # GET /clues
   # GET /clues.json
