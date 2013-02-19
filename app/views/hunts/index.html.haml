@@ -4,6 +4,7 @@
 %table.table.table-striped
   %thead
     %tr
+      %th
       %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:name)
       %th= model_class.human_attribute_name(:created_at)
@@ -11,6 +12,10 @@
   %tbody
     - @hunts.each do |hunt|
       %tr
+        %td
+          - if HuntParticipant.exists? :user_id => current_user.id, :hunt_id => hunt.id, :is_judge => true
+            %abbr{ title: 'You are a judge' }
+              %i.icon-user
         %td= link_to hunt.id, hunt_path(hunt)
         %td= hunt.name
         %td=l hunt.created_at

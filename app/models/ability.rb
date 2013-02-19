@@ -48,6 +48,12 @@ class Ability
     # Only judges can create clues
     can :create, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
 
+    # Only judges can always view clues
+    can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
+
+    # Participants can only view clues if hunt is live
+    can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id }, :is_live => true }
+
     # Only participants can invite people to a hunt
     can :create, User, :hunt => { :hunt_participants => { :user_id => user.id } }
 
