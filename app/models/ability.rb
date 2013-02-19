@@ -59,5 +59,8 @@ class Ability
 
     # Only participants can view participants
     can :read, User, :hunt => { :hunt_participants => { :user_id => user.id } }
+
+    # Only judges can manage judges
+    can :update, HuntParticipant, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
   end
 end

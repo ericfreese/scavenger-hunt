@@ -9,7 +9,12 @@ ScavengerHunt::Application.routes.draw do
     resources :clues, :controller => 'hunt_clues'
     resources :users, :controller => 'hunt_users'
     resources :teams, :controller => 'hunt_teams'
-
+    resources :participants, :controller => 'hunt_participants' do
+      collection do
+        get :edit
+        put :update
+      end
+    end
   end
 
   root :to => 'home#index';

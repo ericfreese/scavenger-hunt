@@ -1,5 +1,5 @@
 class Hunt < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :hunt_participants_attributes
 
   has_many :clues
 
@@ -8,6 +8,10 @@ class Hunt < ActiveRecord::Base
 
   validates_presence_of :name
 
+  validate :must_have_judge
+
+  accepts_nested_attributes_for :hunt_participants
+
   def judges
     User.joins(:hunt_participants).where(:hunt_participants => { :is_judge => true, :hunt_id => self.id })
   end
@@ -15,5 +19,12 @@ class Hunt < ActiveRecord::Base
   def players
     User.joins(:hunt_participants).where(:hunt_participants => { :is_judge => false, :hunt_id => self.id })
   end
+
+  protected
+    def must_have_judge
+      if !hunt_participants.any? { |hp| hp.is_judge }
+        errors.add(:base, 'Hunt must have at least one judge')
+      end
+    end
 
 end

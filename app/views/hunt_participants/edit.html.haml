@@ -1,0 +1,22 @@
+= simple_form_for @hunt, :url => hunt_participants_path(@hunt), :html => { :method => :put } do |f|
+  - if @hunt.errors.any?
+    .alert.alert-error
+      %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
+      %strong= "#{pluralize(@hunt.errors.count, "error")} prohibited this hunt from being saved:"
+      %ul
+        - @hunt.errors.full_messages.each do |msg|
+          %li= msg
+  %table.table
+    %thead
+      %tr
+        %th Judge?
+        %th Email
+        %th Name
+    %tbody
+      = f.simple_fields_for :hunt_participants do |hpf|
+        %tr
+          %td= hpf.input_field :is_judge
+          %td= hpf.object.user.email
+          %td= hpf.object.user.name
+  .form-actions
+    = f.button :submit, "Save", :class => 'btn btn-primary'

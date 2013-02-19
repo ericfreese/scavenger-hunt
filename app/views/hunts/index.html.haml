@@ -1,27 +1,16 @@
-- model_class = Hunt
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize
-%table.table.table-striped
-  %thead
-    %tr
-      %th
-      %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:name)
-      %th= model_class.human_attribute_name(:created_at)
-      %th=t '.actions', :default => t("helpers.actions")
+  %h1 Your Scavenger Hunts
+%table.table.table-hover
   %tbody
     - @hunts.each do |hunt|
       %tr
         %td
           - if HuntParticipant.exists? :user_id => current_user.id, :hunt_id => hunt.id, :is_judge => true
             %abbr{ title: 'You are a judge' }
-              %i.icon-user
-        %td= link_to hunt.id, hunt_path(hunt)
-        %td= hunt.name
-        %td=l hunt.created_at
+              %i.icon-asterisk
+        %td= link_to hunt.name, hunt_path(hunt)
         %td
-          = link_to 'Invite', new_hunt_user_path(hunt), :class => 'btn btn-mini'
-          = link_to 'Edit', edit_hunt_path(hunt), :class => 'btn btn-mini'
-          = link_to 'Destroy', hunt_path(hunt), :method => :delete, :data => { :confirm => t('.confirm', :default => t('helpers.links.confirm', :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+          = link_to edit_hunt_path(hunt), :class => 'btn btn-mini' do
+            %i.icon-edit.icon-large
 
-= link_to t('.new', :default => t("helpers.links.new")), new_hunt_path, :class => 'btn btn-primary'
+= link_to 'New', new_hunt_path, :class => 'btn btn-primary'

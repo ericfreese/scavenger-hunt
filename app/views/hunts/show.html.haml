@@ -4,27 +4,29 @@
     %span.divider /
   %li.active= @hunt.name
 
+- if can? :edit, @hunt
+  .pull-right
+    = link_to 'Edit Hunt', edit_hunt_path, :class => 'btn'
+
 %h1= @hunt.name
 
 .row-fluid
   .span4
     %h2 Clues
-    - if can?(:read, Clue.new(:hunt => @hunt))
+    - if can? :read, Clue.new(:hunt => @hunt)
       - if @hunt.clues.size > 0
         %table.table.table-striped.table-condensed
           %thead
             %tr
               %th Name
-              %th Description
               %th Points
           - @hunt.clues.each do |clue|
             %tr
               %td
                 = link_to clue.name, hunt_clue_path(@hunt, clue)
-              %td= clue.description
               %td= clue.point_value
       - else
-        %p No clues yet!
+        %p No clues!
     - else
       %p Not available until the hunt has started
 
@@ -49,7 +51,7 @@
             %td= player.email
             %td= player.name
     - else
-      %p No players yet.
+      %p No players.
 
     = link_to 'Invite Someone', new_hunt_user_path(@hunt), :class => 'btn'
 
@@ -59,11 +61,19 @@
       %table.table.table-striped.table-condensed
         %thead
           %tr
+            %td
             %th Email
             %th Name
         - @hunt.judges.each do |judge|
           %tr
+            %td
+              - if !judge.invitation_sent_at.nil? && judge.invitation_accepted_at.nil?
+                %abbr{ title: "Invitation sent #{judge.invitation_sent_at}" }
+                  %i.icon-envelope
             %td= judge.email
             %td= judge.name
     - else
-      %p No judges yet.
+      %p No judges. How did that happen?
+
+    - if can? :update, HuntParticipant.new(:hunt => @hunt)
+      = link_to 'Manage Judges', edit_hunt_participants_path(@hunt), :class => 'btn'
