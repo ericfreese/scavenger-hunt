@@ -58,20 +58,16 @@
   .span4
     %h2 Judges
     - if @hunt.judges.size > 0
-      %table.table.table-striped.table-condensed
-        %thead
-          %tr
-            %td
-            %th Email
-            %th Name
-        - @hunt.judges.each do |judge|
-          %tr
-            %td
-              - if !judge.invitation_sent_at.nil? && judge.invitation_accepted_at.nil?
-                %abbr{ title: "Invitation sent #{judge.invitation_sent_at}" }
-                  %i.icon-envelope
-            %td= judge.email
-            %td= judge.name
+      - @hunt.judges.each do |judge|
+        .media
+          .pull-left
+            %img.media-object{ src: current_user.image }
+          .media-body
+            %h4.media-heading= judge.name
+            - if !judge.invitation_sent_at.nil? && judge.invitation_accepted_at.nil?
+              %abbr{ title: "Invitation sent #{judge.invitation_sent_at}" }
+                %i.icon-envelope
+            %span.label= judge.email
     - else
       %p No judges. How did that happen?
 

@@ -13,6 +13,9 @@ gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '~> 1.1.0'
 gem 'cancan'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -34,6 +37,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'meta_request', '0.2.1'
+  gem 'figaro'
 end
 
 gem 'jquery-ui-rails', '~> 2.0.2'
