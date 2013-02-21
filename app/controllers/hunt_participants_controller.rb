@@ -1,4 +1,7 @@
 class HuntParticipantsController < ApplicationController
+  before_filter :authenticate_user!
+  load_and_authorize_resource
+  
   def edit
     @hunt = Hunt.find(params[:hunt_id])
     @hunt_participants = @hunt.hunt_participants

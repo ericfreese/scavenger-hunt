@@ -24,7 +24,7 @@ class HuntUsersController < ApplicationController
 
   def create
     @hunt = Hunt.find(params[:hunt_id])
-    @user = User.invite!(params[:user])
+    @user = User.where(:email => params[:user][:email]).first || User.invite!(:email => params[:user][:email])
 
     respond_to do |format|
       if @user.errors.empty?

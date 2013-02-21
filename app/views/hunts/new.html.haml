@@ -1,5 +1,13 @@
-%h1 New hunt
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li.active New Hunt
 
-= render 'form'
+%h1 New Hunt
 
-= link_to 'Back', hunts_path
+= simple_form_for @hunt, :url => hunts_path, :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name, :label => 'Name', :autofocus => true
+  .form-actions
+    = f.submit :value => 'Save', :class => 'btn btn-primary'
+    = link_to 'Cancel', hunts_path, :class => 'btn'

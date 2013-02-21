@@ -1,5 +1,5 @@
 class Hunt < ActiveRecord::Base
-  attr_accessible :name, :hunt_participants_attributes
+  attr_accessible :name, :hunt_participants_attributes, :is_live
 
   has_many :clues
 

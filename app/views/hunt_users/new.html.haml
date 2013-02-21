@@ -1,8 +1,16 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
+    = link_to @hunt.name, @hunt
+    %span.divider /
+  %li.active Invite
+
 %h2 Invite
 
 = simple_form_for @user, :url => hunt_users_path(@hunt), :html => {:class => 'form-horizontal', :method => :post} do |f|
   = f.input :email, :label => 'Email', :autofocus => true
-  = f.input :name, :label => 'Name'
 
   .form-actions
     = f.submit 'Submit', :class => 'btn btn-primary'

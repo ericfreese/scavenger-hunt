@@ -5,7 +5,7 @@
   %li
     = link_to @hunt.name, @hunt
     %span.divider /
-  %li.active= "#{@clue.name} (#{@clue.point_value} pts)"
+  %li.active= @clue.name
 
 %h1= @clue.name
 %p= @clue.description

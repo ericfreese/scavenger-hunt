@@ -61,7 +61,10 @@
       - @hunt.judges.each do |judge|
         .media
           .pull-left
-            %img.media-object{ src: current_user.image }
+            - if judge.image.nil?
+              .user-missing-image
+            - else 
+              %img.media-object{ src: judge.image }
           .media-body
             %h4.media-heading= judge.name
             - if !judge.invitation_sent_at.nil? && judge.invitation_accepted_at.nil?

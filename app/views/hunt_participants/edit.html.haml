@@ -1,3 +1,12 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
+    = link_to @hunt.name, @hunt
+    %span.divider /
+  %li.active Manage Judges
+
 = simple_form_for @hunt, :url => hunt_participants_path(@hunt), :html => { :method => :put } do |f|
   - if @hunt.errors.any?
     .alert.alert-error

@@ -1,7 +1,13 @@
-%h1 Editing hunt
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li.active= @hunt.name
 
-= render 'form'
+%h1 Edit Hunt
 
-= link_to 'Show', @hunt
-\|
-= link_to 'Back', hunts_path
+= simple_form_for @hunt, :url => hunt_path(@hunt), :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name, :label => 'Name', :autofocus => true
+  = f.input :is_live, :label => 'Is Live?'
+  .form-actions
+    = f.submit :value => 'Save', :class => 'btn btn-primary'
