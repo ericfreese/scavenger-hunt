@@ -16,6 +16,8 @@ gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+gem 'figaro'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -37,7 +39,6 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'meta_request', '0.2.1'
-  gem 'figaro'
 end
 
 gem 'jquery-ui-rails', '~> 2.0.2'
