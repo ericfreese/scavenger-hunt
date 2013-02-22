@@ -81,17 +81,17 @@ ScavengerHunt::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # For devise mail
-  config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.delivery_method = :smtp
   
-  config.action_mailer.smtp_settings = {
-    :address => 'smtp.gmail.net',
-    :port => '587',
-    :domain => 'jointhehunt.herokuapp.com',
-    :user_name => Figaro.env.gmail_username,
-    :password => Figaro.env.gmail_password,
-    :authentication => 'plain',
-    :enable_starttls_auto => true
-  }
+  # config.action_mailer.smtp_settings = {
+  #   :address => 'smtp.gmail.net',
+  #   :port => '587',
+  #   :domain => 'jointhehunt.herokuapp.com',
+  #   :user_name => Figaro.env.gmail_username,
+  #   :password => Figaro.env.gmail_password,
+  #   :authentication => 'plain',
+  #   :enable_starttls_auto => true
+  # }
 end
