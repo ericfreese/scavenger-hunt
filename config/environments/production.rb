@@ -86,12 +86,12 @@ ScavengerHunt::Application.configure do
   config.action_mailer.delivery_method = :smtp
   
   config.action_mailer.smtp_settings = {
-    :enable_starttls_auto => true,
     :address => 'smtp.gmail.net',
     :port => '587',
-    :domain => 'gmail.com',
-    :authentication => :login,
+    :domain => 'jointhehunt.herokuapp.com',
     :user_name => Figaro.env.gmail_username,
-    :password => Figaro.env.gmail_password
+    :password => Figaro.env.gmail_password,
+    :authentication => 'plain',
+    :enable_starttls_auto => true
   }
 end
