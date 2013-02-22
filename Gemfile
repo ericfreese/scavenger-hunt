@@ -12,6 +12,7 @@ gem 'twitter-bootstrap-rails', '2.1.6'
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '~> 1.1.0'
 gem 'cancan'
+gem 'mail'
 
 gem 'omniauth'
 gem 'omniauth-facebook'

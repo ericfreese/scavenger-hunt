@@ -201,6 +201,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails (~> 2.0.2)
   less-rails (~> 2.2.6)
+  mail
   meta_request (= 0.2.1)
   omniauth
   omniauth-facebook
