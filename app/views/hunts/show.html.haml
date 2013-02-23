@@ -59,18 +59,7 @@
     %h2 Judges
     - if @hunt.judges.size > 0
       - @hunt.judges.each do |judge|
-        .media
-          .pull-left
-            - if judge.image.nil?
-              .user-missing-image
-            - else 
-              %img.media-object{ src: judge.image }
-          .media-body
-            %h4.media-heading= judge.name
-            - if !judge.invitation_sent_at.nil? && judge.invitation_accepted_at.nil?
-              %abbr{ title: "Invitation sent #{judge.invitation_sent_at}" }
-                %i.icon-envelope
-            %span.label= judge.email
+        = render :partial => 'shared/user', :locals => { :user => judge }
     - else
       %p No judges. How did that happen?
 

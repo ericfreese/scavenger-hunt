@@ -10,5 +10,6 @@
  *
  *= require_self
  *= require zocial
+ *= require chosen
  *= require_tree .
  */

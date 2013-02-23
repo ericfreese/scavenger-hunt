@@ -8,7 +8,8 @@ gem 'less-rails', '~> 2.2.6' # Less support
 gem 'pg', '0.13.2' # Postgres
 gem 'sass'
 gem 'simple_form', '2.0.4' # Form helper
-gem 'twitter-bootstrap-rails', '2.1.6'
+gem 'twitter-bootstrap-rails', '2.2.4'
+gem 'chosen-rails'
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '~> 1.1.0'
 gem 'cancan'

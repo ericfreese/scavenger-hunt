@@ -1,0 +1,28 @@
+.user-badge {
+  min-height: 50px;
+
+  .user-badge-image {
+    float: left;
+    width: 50px;
+    height: 50px;
+
+    .user-badge-missing-image {
+      background: #ccc;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .user-badge-details {
+    margin-left: 60px;
+
+    i {
+      color: #3b5998;
+      font-size: 1.1em;
+
+      a:hover & {
+        color: inherit;
+      }
+    }
+  }
+}

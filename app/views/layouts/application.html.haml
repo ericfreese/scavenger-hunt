@@ -35,12 +35,23 @@
               - if user_signed_in?
                 %li.dropdown
                   %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
-                    %i.icon-user
+                    %i.icon-calendar
+                    %span.label.label-important 4
+                  %ul.dropdown-menu
+                    %li= link_to 'John Schwack has invited you to a hunt'
+                    %li= link_to 'Tommy Ronkatonso has invited you to a hunt'
+                    %li.divider
+                    %li
+                      %a{ href: '#' }
+                        See all invitations
+                %li.dropdown
+                  %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                     = current_user.name
                     %b.caret
                   %ul.dropdown-menu
-                    %li= link_to 'My Hunts', hunts_path
-                    %li= link_to 'Edit Profile', edit_user_registration_path
+                    %li
+                      = link_to edit_user_registration_path do
+                        = render :partial => 'shared/user', :locals => { :user => current_user }
                     %li.divider
                     %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
               - else
