@@ -18,6 +18,13 @@ class HuntsController < ApplicationController
   def show
     @hunt = Hunt.find(params[:id])
 
+    # Is the current user invited to this hunt?
+    @hunt_invitation = HuntInvitation.where(
+      :user_id => current_user.id,
+      :hunt_id => @hunt.id,
+      :status_cd => HuntInvitation.invited
+    ).first
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @hunt }

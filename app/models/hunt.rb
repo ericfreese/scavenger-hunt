@@ -5,22 +5,20 @@ class Hunt < ActiveRecord::Base
 
   has_many :hunt_participants
   has_many :users, :through => :hunt_participants do
-    def invited
-      where(:hunt_participants => { :status_cd => HuntParticipant.invited })
-    end
-
-    def requested
-      where(:hunt_participants => { :status_cd => HuntParticipant.requested })
-    end
-
     def judges
-      where(:hunt_participants => { :status_cd => HuntParticipant.judge })
+      where(:hunt_participants => {
+        :status_cd => HuntParticipant.judge
+      })
     end
 
     def players
-      where(:hunt_participants => { :status_cd => HuntParticipant.player })
+      where(:hunt_participants => {
+        :status_cd => HuntParticipant.player
+      })
     end
   end
+
+  has_many :hunt_invitations
 
   validates_presence_of :name
 

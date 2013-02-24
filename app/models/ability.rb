@@ -39,8 +39,9 @@ class Ability
     # Anyone can create a hunt
     can :create, Hunt
 
-    # Only can see hunts if you are a participant
+    # Can see hunts if you are a participant or you've been invited
     can :read, Hunt, :hunt_participants => { :user_id => user.id }
+    can :read, Hunt, :hunt_invitations => { :user_id => user.id, :status => :invited }
 
     # Only judges can update hunts
     can :update, Hunt, :hunt_participants => { :user_id => user.id, :status => :judge }
@@ -62,5 +63,11 @@ class Ability
 
     # Only judges can manage judges
     can :update, HuntParticipant, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
+
+    # Judges can cancel any participant
+    can :cancel, HuntInvitation, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
+
+    # The user who created the invitation can cancel it
+    # can :cancel, HuntInvitation, :invited_by => user.id
   end
 end

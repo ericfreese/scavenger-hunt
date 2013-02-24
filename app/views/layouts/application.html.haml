@@ -36,12 +36,12 @@
                 %li.dropdown
                   %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                     %i.icon-calendar
-                    - if current_user.hunts.invited.size > 0
-                      %span.label.label-important= current_user.hunts.invited.size
+                    - if current_user.hunt_invitations.status_invited.size > 0
+                      %span.label.label-important= current_user.hunt_invitations.status_invited.size
                   %ul.dropdown-menu
-                    - if current_user.hunts.invited.size > 0
-                      - current_user.hunts.invited.each do |hunt|
-                        %li= link_to "You have been invited to: #{hunt.name}", hunt
+                    - if current_user.hunt_invitations.status_invited.size > 0
+                      - current_user.hunt_invitations.status_invited.each do |hunt_invitation|
+                        %li= link_to "You have been invited to: #{hunt_invitation.hunt.name}", hunt_invitation.hunt
                     - else
                       %li= link_to 'No new invitations', '#'
                     %li.divider

@@ -8,14 +8,6 @@ class User < ActiveRecord::Base
 
   has_many :hunt_participants
   has_many :hunts, :through => :hunt_participants do
-    def invited
-      where(:hunt_participants => { :status_cd => HuntParticipant.invited })
-    end
-
-    def requested
-      where(:hunt_participants => { :status_cd => HuntParticipant.requested })
-    end
-
     def judging
       where(:hunt_participants => { :status_cd => HuntParticipant.judge })
     end
@@ -24,6 +16,8 @@ class User < ActiveRecord::Base
       where(:hunt_participants => { :status_cd => HuntParticipant.player })
     end
   end
+
+  has_many :hunt_invitations
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation,

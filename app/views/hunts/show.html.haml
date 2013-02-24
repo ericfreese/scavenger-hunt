@@ -4,8 +4,10 @@
     %span.divider /
   %li.active= @hunt.name
 
-- if can? :edit, @hunt
-  .pull-right
+.pull-right
+  - if !@hunt_invitation.nil?
+    = link_to 'Accept Invitation', accept_hunt_invitation_path(@hunt, @hunt_invitation), :class => 'btn btn-success', :method => 'put'
+  - elsif can? :edit, @hunt
     - if can? :update, HuntParticipant.new(:hunt => @hunt)
       = link_to 'Manage Participants', edit_hunt_participants_path(@hunt), :class => 'btn'
     = link_to 'Edit Hunt', edit_hunt_path, :class => 'btn'
@@ -15,15 +17,19 @@
 .row-fluid
   .span4
     %h2 Invites
-    - if @hunt.users.invited.size > 0
+    - if @hunt.hunt_invitations.status_invited.size > 0
       %table.table.table-hover
-        - @hunt.users.invited.each do |invited|
+        - @hunt.hunt_invitations.status_invited.each do |hunt_invitation|
           %tr
-            %td= render :partial => 'shared/user', :locals => { :user => invited }
+            %td
+              - if can? :cancel, hunt_invitation
+                .pull-right
+                  = link_to 'Cancel', cancel_hunt_invitation_path(@hunt, hunt_invitation), :class => 'btn btn-danger btn-mini', :method => 'put', :confirm => 'Are you sure you want to cancel this invitation?'
+              = render :partial => 'shared/user', :locals => { :user => hunt_invitation.user }
     - else
       %p Nobody here.
 
-    = link_to 'Invite Someone', new_hunt_user_path(@hunt), :class => 'btn'
+    = link_to 'Invite Someone', new_hunt_invitation_path(@hunt), :class => 'btn'
 
   / .span3
   /   %h2 Requests

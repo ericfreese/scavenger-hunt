@@ -1,0 +1,17 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
+    = link_to @hunt.name, @hunt
+    %span.divider /
+  %li.active Invitations
+
+%table.table
+  %thead
+    %tr
+      %th Email
+  %tbody
+    - @hunt_invitations.each do |hunt_invitation|
+      %tr
+        %td= hunt_invitation.user.email

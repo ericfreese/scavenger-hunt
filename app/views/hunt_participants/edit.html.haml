@@ -5,7 +5,7 @@
   %li
     = link_to @hunt.name, @hunt
     %span.divider /
-  %li.active Manage Judges
+  %li.active Manage Participants
 
 = simple_form_for @hunt, :url => hunt_participants_path(@hunt), :html => { :method => :put } do |f|
   - if @hunt.errors.any?

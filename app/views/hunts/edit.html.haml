@@ -2,7 +2,10 @@
   %li
     = link_to 'Hunts', hunts_path
     %span.divider /
-  %li.active= @hunt.name
+  %li
+    = link_to @hunt.name, @hunt
+    %span.divider /
+  %li.active Edit Hunt
 
 %h1 Edit Hunt
 
