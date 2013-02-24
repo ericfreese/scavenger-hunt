@@ -41,7 +41,7 @@
                   %ul.dropdown-menu
                     - if current_user.hunts.invited.size > 0
                       - current_user.hunts.invited.each do |hunt|
-                        %li= link_to "You have been invited to: #{@hunt.name}", @hunt
+                        %li= link_to "You have been invited to: #{hunt.name}", hunt
                     - else
                       %li= link_to 'No new invitations', '#'
                     %li.divider
