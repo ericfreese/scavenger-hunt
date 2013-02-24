@@ -4,7 +4,8 @@ class HuntInvitation < ActiveRecord::Base
   as_enum :status,
     :invited => 1,
     :canceled => 2,
-    :accepted => 3
+    :declined => 3,
+    :accepted => 4
 
   belongs_to :hunt
   belongs_to :user

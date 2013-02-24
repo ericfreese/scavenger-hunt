@@ -8,7 +8,12 @@ ScavengerHunt::Application.routes.draw do
   resources :hunts do
     resources :clues, :controller => 'hunt_clues'
     resources :users, :controller => 'hunt_users'
-    resources :teams, :controller => 'hunt_teams'
+    
+    resources :teams, :controller => 'hunt_teams' do
+      member do
+        put 'join'
+      end
+    end
 
     resources :invitations, :controller => 'hunt_invitations' do
       member do

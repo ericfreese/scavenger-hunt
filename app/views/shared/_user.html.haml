@@ -5,9 +5,25 @@
     - else
       %img.media-object{ src: user.image }
   .user-badge-details
-    %h4.media-heading= user.name
-    - unless user.provider.nil?
-      - case user.provider
-        - when 'facebook'
-          %i.icon-facebook-sign
-    %span.label= user.email
+    - unless user.name.nil?
+      %h4.media-heading
+        = user.name
+        - unless user.provider.nil?
+          - case user.provider
+            - when 'facebook'
+              %i.icon-facebook-sign
+    - else
+      %span.label= user.email
+      
+    - unless @hunt.nil?
+      - invitation = user.hunt_invitations.status_invited.where(:hunt_id => @hunt.id).first
+      - unless invitation.nil?
+        .invitation
+          %i.icon-envelope
+          %small
+            = "Invitation sent #{time_ago_in_words(invitation.created_at)} ago"
+            - if can? :cancel, invitation
+              = link_to cancel_hunt_invitation_path(@hunt, invitation), :method => 'put', :confirm => 'Are you sure you want to cancel this invitation?', :class => 'label label-important' do
+                %i.icon-remove.icon-white
+                Cancel
+              

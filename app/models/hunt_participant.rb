@@ -7,6 +7,7 @@ class HuntParticipant < ActiveRecord::Base
 
   belongs_to :hunt
   belongs_to :user
+  belongs_to :hunt_team
 
   # A user can only participate in a hunt once
   validates_uniqueness_of :user_id, :scope => :hunt_id

@@ -1,85 +1,71 @@
 class HuntTeamsController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource :user, :through => :hunt
 
-  # GET /teams
-  # GET /teams.json
   def index
-    @teams = Team.all
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_teams = @hunt.hunt_teams
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @teams }
     end
   end
 
-  # GET /teams/1
-  # GET /teams/1.json
+  def new
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_team = @hunt.hunt_teams.build
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @hunt_team }
+    end
+  end
+
+  def edit
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_team = @hunt.hunt_teams.find(params[:id])
+  end
+
   def show
-    @team = Team.find(params[:id])
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_team = @hunt.hunt_teams.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @team }
+      format.json { render json: @clue }
     end
   end
 
-  # GET /teams/new
-  # GET /teams/new.json
-  def new
-    @team = Team.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @team }
-    end
-  end
-
-  # GET /teams/1/edit
-  def edit
-    @team = Team.find(params[:id])
-  end
-
-  # POST /teams
-  # POST /teams.json
   def create
-    @team = Team.new(params[:team])
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_team = @hunt.hunt_teams.build(params[:hunt_team])
 
     respond_to do |format|
-      if @team.save
-        format.html { redirect_to @team, notice: 'Team was successfully created.' }
-        format.json { render json: @team, status: :created, location: @team }
+      if @hunt.save
+        format.html { redirect_to @hunt, notice: 'Team was successfully created.' }
+        format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
-        format.json { render json: @team.errors, status: :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /teams/1
-  # PUT /teams/1.json
-  def update
-    @team = Team.find(params[:id])
+  def join
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_team = @hunt.hunt_teams.find(params[:id])
+    @hunt_participant = current_user.hunt_participants.where(:hunt_id => @hunt.id).first
+    @hunt_participant.hunt_team = @hunt_team;
 
     respond_to do |format|
-      if @team.update_attributes(params[:team])
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
-        format.json { head :no_content }
+      if @hunt_participant.save
+        format.html { redirect_to @hunt, notice: 'Successfully joined team.' }
+        format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @team.errors, status: :unprocessable_entity }
+        format.html { redirect_to @hunt, alert: 'Failed to join team.' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /teams/1
-  # DELETE /teams/1.json
-  def destroy
-    @team = Team.find(params[:id])
-    @team.destroy
-
-    respond_to do |format|
-      format.html { redirect_to teams_url }
-      format.json { head :no_content }
     end
   end
 end

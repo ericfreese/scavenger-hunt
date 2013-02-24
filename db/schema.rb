@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "", :null => false
-    t.string   "name",                                 :default => "", :null => false
+    t.string   "name"
     t.string   "image"
     t.string   "provider"
     t.string   "uid",                                  :default => "", :null => false
@@ -77,7 +77,15 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
   create_table "hunt_participants", :force => true do |t|
     t.integer "hunt_id", :null => false
     t.integer "user_id", :null => false
+    t.integer "hunt_team_id"
     t.integer "status_cd", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "hunt_teams", :force => true do |t|
+    t.integer "hunt_id", :null => false
+    t.string "name", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -37,7 +37,7 @@
                   %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                     %i.icon-calendar
                     - if current_user.hunt_invitations.status_invited.size > 0
-                      %span.label.label-important= current_user.hunt_invitations.status_invited.size
+                      %span.badge.badge-important= current_user.hunt_invitations.status_invited.size
                   %ul.dropdown-menu
                     - if current_user.hunt_invitations.status_invited.size > 0
                       - current_user.hunt_invitations.status_invited.each do |hunt_invitation|

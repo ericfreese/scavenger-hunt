@@ -1,5 +1,18 @@
-%h1 New team
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
+    = link_to @hunt.name, @hunt
+    %span.divider /
+  %li
+    = link_to 'Teams', hunt_teams_path(@hunt)
+    %span.divider /
+  %li.active New Team
 
-= render 'form'
+%h1 New Team
 
-= link_to 'Back', teams_path
+= simple_form_for @hunt_team, :url => hunt_teams_path(@hunt), :html => { :class => 'form-horizontal' } do |f|
+  = f.input :name, :label => 'Name', :autofocus => true
+  .form-actions
+    = f.submit :value => 'Save', :class => 'btn btn-primary'

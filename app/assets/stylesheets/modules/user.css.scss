@@ -22,8 +22,11 @@
     margin-left: 60px;
 
     i {
-      color: #3b5998;
       font-size: 1.1em;
+
+      &.icon-facebook-sign {
+        color: #3b5998;
+      }
 
       a:hover & {
         color: inherit;

@@ -69,5 +69,17 @@ class Ability
 
     # The user who created the invitation can cancel it
     # can :cancel, HuntInvitation, :invited_by => user.id
+
+    # Only players can create teams
+    can :create, HuntTeam, :hunt => { :hunt_participants => { :user_id => user.id, :status => :player } }
+
+    # Only players can join teams
+    can :join, HuntTeam, :hunt => { :hunt_participants => { :user_id => user.id, :status => :player } }
+
+    # Can't join a team if the user is already on it
+    cannot :join, HuntTeam, :hunt_participants => { :user_id => user.id }
+
+    # Can only edit a team if the player is on it
+    can :update, HuntTeam, :hunt_participants => { :user_id => user.id }
   end
 end
