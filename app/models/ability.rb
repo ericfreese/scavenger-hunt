@@ -43,13 +43,13 @@ class Ability
     can :read, Hunt, :hunt_participants => { :user_id => user.id }
 
     # Only judges can update hunts
-    can :update, Hunt, :hunt_participants => { :user_id => user.id, :is_judge => true }
+    can :update, Hunt, :hunt_participants => { :user_id => user.id, :status => :judge }
 
     # Only judges can create clues
-    can :create, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
+    can :create, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
 
     # Only judges can always view clues
-    can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
+    can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
 
     # Participants can only view clues if hunt is live
     can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id }, :is_live => true }
@@ -61,6 +61,6 @@ class Ability
     can :read, User, :hunt => { :hunt_participants => { :user_id => user.id } }
 
     # Only judges can manage judges
-    can :update, HuntParticipant, :hunt => { :hunt_participants => { :user_id => user.id, :is_judge => true } }
+    can :update, HuntParticipant, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
   end
 end

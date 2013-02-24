@@ -36,10 +36,14 @@
                 %li.dropdown
                   %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                     %i.icon-calendar
-                    %span.label.label-important 4
+                    - if current_user.hunts.invited.size > 0
+                      %span.label.label-important= current_user.hunts.invited.size
                   %ul.dropdown-menu
-                    %li= link_to 'John Schwack has invited you to a hunt'
-                    %li= link_to 'Tommy Ronkatonso has invited you to a hunt'
+                    - if current_user.hunts.invited.size > 0
+                      - current_user.hunts.invited.each do |hunt|
+                        %li= link_to "You have been invited to: #{@hunt.name}", @hunt
+                    - else
+                      %li= link_to 'No new invitations', '#'
                     %li.divider
                     %li
                       %a{ href: '#' }
@@ -51,7 +55,22 @@
                   %ul.dropdown-menu
                     %li
                       = link_to edit_user_registration_path do
-                        = render :partial => 'shared/user', :locals => { :user => current_user }
+                        .user-badge
+                          .user-badge-image
+                            - if current_user.image.nil?
+                              %i.icon-user
+                            - else
+                              %img.media-object{ src: current_user.image }
+                          .user-badge-details
+                            %h4.media-heading= current_user.name
+                            - unless current_user.provider.nil?
+                              %small
+                                Signed in via
+                                - case current_user.provider
+                                  - when 'facebook'
+                                    %i.icon-facebook-sign
+                            - else
+                              %span.label= current_user.email
                     %li.divider
                     %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
               - else

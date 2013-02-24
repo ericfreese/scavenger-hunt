@@ -24,7 +24,7 @@
     %tbody
       = f.simple_fields_for :hunt_participants do |hpf|
         %tr
-          %td= hpf.input_field :is_judge
+          %td= hpf.select :status, HuntParticipant.statuses.keys
           %td= hpf.object.user.email
           %td= hpf.object.user.name
   .form-actions

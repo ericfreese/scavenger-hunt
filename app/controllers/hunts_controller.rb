@@ -44,7 +44,7 @@ class HuntsController < ApplicationController
   # POST /hunts.json
   def create
     @hunt = Hunt.new(params[:hunt])
-    @hunt.hunt_participants.build(:user => current_user, :is_judge => true)
+    @hunt.hunt_participants.build(:user => current_user, :status => :judge)
 
     respond_to do |format|
       if @hunt.save

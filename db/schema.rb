@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
     t.string   "email",                                :default => "", :null => false
     t.string   "name",                                 :default => "", :null => false
     t.string   "image"
-    t.string   "provider",                             :default => "", :null => false
+    t.string   "provider"
     t.string   "uid",                                  :default => "", :null => false
     t.string   "encrypted_password",                   :default => ""
     t.string   "reset_password_token"
@@ -75,9 +75,11 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
   end
 
   create_table "hunt_participants", :force => true do |t|
-    t.integer :hunt_id, :null => false
-    t.integer :user_id, :null => false
-    t.boolean :is_judge, :default => false, :null => false
+    t.integer "hunt_id", :null => false
+    t.integer "user_id", :null => false
+    t.integer "status_cd"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

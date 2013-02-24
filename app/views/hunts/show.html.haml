@@ -6,16 +6,61 @@
 
 - if can? :edit, @hunt
   .pull-right
+    - if can? :update, HuntParticipant.new(:hunt => @hunt)
+      = link_to 'Manage Participants', edit_hunt_participants_path(@hunt), :class => 'btn'
     = link_to 'Edit Hunt', edit_hunt_path, :class => 'btn'
 
 %h1= @hunt.name
 
 .row-fluid
   .span4
+    %h2 Invites
+    - if @hunt.users.invited.size > 0
+      %table.table.table-hover
+        - @hunt.users.invited.each do |invited|
+          %tr
+            %td= render :partial => 'shared/user', :locals => { :user => invited }
+    - else
+      %p Nobody here.
+
+    = link_to 'Invite Someone', new_hunt_user_path(@hunt), :class => 'btn'
+
+  / .span3
+  /   %h2 Requests
+  /   - if @hunt.users.requested.size > 0
+  /     %table.table.table-hover
+  /       - @hunt.users.requested.each do |requested|
+  /         %tr
+  /           %td= render :partial => 'shared/user', :locals => { :user => requested }
+  /   - else
+  /     %p Nobody here.
+
+  .span4
+    %h2 Players
+    - if @hunt.users.players.size > 0
+      %table.table.table-hover
+        - @hunt.users.players.each do |player|
+          %tr
+            %td= render :partial => 'shared/user', :locals => { :user => player }
+    - else
+      %p Nobody here.
+
+  .span4
+    %h2 Judges
+    - if @hunt.users.judges.size > 0
+      %table.table.table-hover
+        - @hunt.users.judges.each do |judge|
+          %tr
+            %td= render :partial => 'shared/user', :locals => { :user => judge }
+    - else
+      %p No judges. How did that happen?
+
+.row-fluid
+  .span12
     %h2 Clues
     - if can? :read, Clue.new(:hunt => @hunt)
       - if @hunt.clues.size > 0
-        %table.table.table-striped.table-condensed
+        %table.table.table-striped
           %thead
             %tr
               %th Name
@@ -32,36 +77,3 @@
 
     - if can? :create, Clue.new(:hunt => @hunt)
       = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
-
-  .span4
-    %h2 Players
-    - if @hunt.players.size > 0
-      %table.table.table-striped.table-condensed
-        %thead
-          %tr
-            %th
-            %th Email
-            %th Name
-        - @hunt.players.each do |player|
-          %tr
-            %td
-              - if !player.invitation_sent_at.nil? && player.invitation_accepted_at.nil?
-                %abbr{ title: "Invitation sent #{player.invitation_sent_at}" }
-                  %i.icon-envelope
-            %td= player.email
-            %td= player.name
-    - else
-      %p No players.
-
-    = link_to 'Invite Someone', new_hunt_user_path(@hunt), :class => 'btn'
-
-  .span4
-    %h2 Judges
-    - if @hunt.judges.size > 0
-      - @hunt.judges.each do |judge|
-        = render :partial => 'shared/user', :locals => { :user => judge }
-    - else
-      %p No judges. How did that happen?
-
-    - if can? :update, HuntParticipant.new(:hunt => @hunt)
-      = link_to 'Manage Judges', edit_hunt_participants_path(@hunt), :class => 'btn'

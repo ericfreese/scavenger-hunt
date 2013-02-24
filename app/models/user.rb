@@ -7,7 +7,23 @@ class User < ActiveRecord::Base
          :omniauthable
 
   has_many :hunt_participants
-  has_many :hunts, :through => :hunt_participants
+  has_many :hunts, :through => :hunt_participants do
+    def invited
+      where(:hunt_participants => { :status_cd => HuntParticipant.invited })
+    end
+
+    def requested
+      where(:hunt_participants => { :status_cd => HuntParticipant.requested })
+    end
+
+    def judging
+      where(:hunt_participants => { :status_cd => HuntParticipant.judge })
+    end
+
+    def playing
+      where(:hunt_participants => { :status_cd => HuntParticipant.player })
+    end
+  end
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation,

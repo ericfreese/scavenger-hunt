@@ -1,17 +1,13 @@
 .user-badge
   .user-badge-image
     - if user.image.nil?
-      .user-missing-image
-    - else 
+      %i.icon-user
+    - else
       %img.media-object{ src: user.image }
   .user-badge-details
     %h4.media-heading= user.name
-    / - if !user.invitation_sent_at.nil? && user.invitation_accepted_at.nil?
-    /   %abbr{ title: "Invitation sent #{user.invitation_sent_at}" }
-    /     %i.icon-envelope
     - unless user.provider.nil?
-      %small
-        Signed in via
-        - case user.provider
-          - when 'facebook'
-            %i.icon-facebook-sign
+      - case user.provider
+        - when 'facebook'
+          %i.icon-facebook-sign
+    %span.label= user.email

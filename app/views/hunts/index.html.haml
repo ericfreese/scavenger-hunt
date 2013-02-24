@@ -5,7 +5,7 @@
     - @hunts.each do |hunt|
       %tr
         %td
-          - if HuntParticipant.exists? :user_id => current_user.id, :hunt_id => hunt.id, :is_judge => true
+          - if HuntParticipant.exists? :user_id => current_user.id, :hunt_id => hunt.id, :status_cd => HuntParticipant.judge
             %abbr{ title: 'You are a judge' }
               %i.icon-asterisk
         %td= link_to hunt.name, hunt_path(hunt)

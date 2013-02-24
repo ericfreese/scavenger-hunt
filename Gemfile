@@ -3,22 +3,27 @@ ruby '1.9.3'
 
 gem 'rails', '3.2.12'
 
+gem 'pg', '0.13.2' # Postgres
+
 gem 'haml', '3.1.6'
 gem 'less-rails', '~> 2.2.6' # Less support
-gem 'pg', '0.13.2' # Postgres
 gem 'sass'
+
 gem 'simple_form', '2.0.4' # Form helper
 gem 'twitter-bootstrap-rails', '2.2.4'
+
 gem 'chosen-rails'
+
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '~> 1.1.0'
 gem 'cancan'
-gem 'mail'
-
 gem 'omniauth'
 gem 'omniauth-facebook'
 
 gem 'figaro'
+gem 'simple_enum'
+
+gem 'mail'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
