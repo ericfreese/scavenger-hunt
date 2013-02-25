@@ -16,14 +16,15 @@ gem 'chosen-rails'
 
 gem 'devise', '>= 2.0.0'
 gem 'devise_invitable', '~> 1.1.0'
-gem 'cancan'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'cancan'
 
 gem 'figaro'
 gem 'simple_enum'
-
 gem 'mail'
+gem 'carrierwave'
+gem 'fog'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
