@@ -16,7 +16,7 @@
       %span.label= user.email
       
     - unless @hunt.nil?
-      - invitation = user.hunt_invitations.status_invited.where(:hunt_id => @hunt.id).first
+      - invitation = user.invitations.status_invited.where(:hunt_id => @hunt.id).first
       - unless invitation.nil?
         .invitation
           %i.icon-envelope

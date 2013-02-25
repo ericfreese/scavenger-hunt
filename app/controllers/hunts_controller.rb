@@ -19,10 +19,10 @@ class HuntsController < ApplicationController
     @hunt = Hunt.find(params[:id])
 
     # Is the current user invited to this hunt?
-    @hunt_invitation = HuntInvitation.where(
+    @invitation = Invitation.where(
       :user_id => current_user.id,
       :hunt_id => @hunt.id,
-      :status_cd => HuntInvitation.invited
+      :status_cd => Invitation.invited
     ).first
 
     respond_to do |format|

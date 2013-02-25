@@ -9,11 +9,11 @@
 
 %h1 Teams
 .row-fluid
-  - @hunt_teams.each_slice(3) do |hunt_team_row|
+  - @teams.each_slice(3) do |team_row|
     .span4
-      - hunt_team_row.each do |hunt_team|
-        %h2= hunt_team.name
+      - team_row.each do |team|
+        %h2= team.name
         %table.table.hover
-          - hunt_team.users.players.each do |user|
+          - team.users.players.each do |user|
             %tr
               %td= render :partial => 'shared/user', :locals => { :user => user }

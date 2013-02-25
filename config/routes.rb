@@ -30,6 +30,10 @@ ScavengerHunt::Application.routes.draw do
     end
   end
 
+  resources :clues do
+    resources :submissions, :controller => 'clue_submissions'
+  end
+
   root :to => 'home#index';
 
   # The priority is based upon order of creation:

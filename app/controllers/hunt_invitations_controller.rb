@@ -4,7 +4,7 @@ class HuntInvitationsController < ApplicationController
 
   def index
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_invitations = @hunt.hunt_invitations
+    @invitations = @hunt.invitations
 
     respond_to do |format|
       format.html
@@ -30,7 +30,7 @@ class HuntInvitationsController < ApplicationController
 
     respond_to do |format|
       if @user.errors.empty?
-        @hunt.hunt_invitations.create! :user => @user, :status => :invited #, :invited_by => current_user
+        @hunt.invitations.create! :user => @user, :status => :invited #, :invited_by => current_user
         format.html { redirect_to @hunt, notice: 'User was successfully invited.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -42,12 +42,12 @@ class HuntInvitationsController < ApplicationController
 
   def accept
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_invitation = @hunt.hunt_invitations.find(params[:id])
-    @hunt.hunt_participants.build(:user => @hunt_invitation.user, :status => :player)
-    @hunt_invitation.status = :accepted
+    @invitation = @hunt.invitations.find(params[:id])
+    @hunt.hunt_participants.build(:user => @invitation.user, :status => :player)
+    @invitation.status = :accepted
 
     respond_to do |format|
-      if @hunt.save && @hunt_invitation.save
+      if @hunt.save && @invitation.save
         format.html { redirect_to @hunt, notice: 'Invitation was successfully accepted.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -59,11 +59,11 @@ class HuntInvitationsController < ApplicationController
 
   def decline
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_invitation = @hunt.hunt_invitations.find(params[:id])
-    @hunt_invitation.status = :declined
+    @invitation = @hunt.invitations.find(params[:id])
+    @invitation.status = :declined
 
     respond_to do |format|
-      if @hunt_invitation.save
+      if @invitation.save
         format.html { redirect_to @hunt, notice: 'Invitation was successfully accepted.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -75,11 +75,11 @@ class HuntInvitationsController < ApplicationController
 
   def cancel
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_invitation = @hunt.hunt_invitations.find(params[:id])
-    @hunt_invitation.status = :canceled
+    @invitation = @hunt.invitations.find(params[:id])
+    @invitation.status = :canceled
 
     respond_to do |format|
-      if @hunt_invitation.save
+      if @invitation.save
         format.html { redirect_to @hunt, notice: 'Invitation was successfully canceled.' }
         format.json { render json: @user, status: :created, location: @user }
       else

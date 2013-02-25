@@ -8,10 +8,10 @@
   %li
     = link_to 'Teams', hunt_teams_path(@hunt)
     %span.divider /
-  %li.active= @hunt_team.name
+  %li.active= @team.name
 
-%h1= @hunt_team.name
+%h1= @team.name
 %table.table.hover
-  - @hunt_team.users.players.each do |user|
+  - @team.users.players.each do |user|
     %tr
       %td= render :partial => 'shared/user', :locals => { :user => user }

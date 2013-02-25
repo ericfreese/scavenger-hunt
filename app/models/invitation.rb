@@ -1,4 +1,4 @@
-class HuntInvitation < ActiveRecord::Base
+class Invitation < ActiveRecord::Base
   attr_accessible :created_at, :canceled_at, :user, :hunt, :status
 
   as_enum :status,

@@ -5,10 +5,10 @@
   %li.active= @hunt.name
 
 .pull-right
-  - if !@hunt_invitation.nil?
+  - if !@invitation.nil?
     Respond to invitation: 
-    = link_to 'Accept', accept_hunt_invitation_path(@hunt, @hunt_invitation), :class => 'btn btn-success', :method => 'put'
-    = link_to 'Decline', decline_hunt_invitation_path(@hunt, @hunt_invitation), :class => 'btn btn-danger', :method => 'put'
+    = link_to 'Accept', accept_hunt_invitation_path(@hunt, @invitation), :class => 'btn btn-success', :method => 'put'
+    = link_to 'Decline', decline_hunt_invitation_path(@hunt, @invitation), :class => 'btn btn-danger', :method => 'put'
   - elsif can? :edit, @hunt
     - if can? :update, HuntParticipant.new(:hunt => @hunt)
       = link_to 'Manage Participants', edit_hunt_participants_path(@hunt), :class => 'btn'
@@ -20,27 +20,27 @@
 
   .span8
     %h2 Teams
-    - if @hunt.hunt_teams.size > 0
-      - @hunt.hunt_teams.each_slice(2) do |hunt_team_row|
+    - if @hunt.teams.size > 0
+      - @hunt.teams.each_slice(2) do |team_row|
         .row-fluid
-          - hunt_team_row.each do |hunt_team|
+          - team_row.each do |team|
             .span6
               %h3
-                = hunt_team.name
+                = team.name
                 %small
-                  - if can? :update, hunt_team
-                    = link_to edit_hunt_team_path(@hunt, hunt_team), :title => 'Edit' do
+                  - if can? :update, team
+                    = link_to edit_hunt_team_path(@hunt, team), :title => 'Edit' do
                       %i.icon-edit
               %table.table.table-hover
-                - hunt_team.users.players.each do |user|
+                - team.users.players.each do |user|
                   %tr
                     %td= render :partial => 'shared/user', :locals => { :user => user }
-              - if can? :join, hunt_team
-                = link_to 'Join this team', join_hunt_team_path(@hunt, hunt_team), :class => 'btn', :method => :put
+              - if can? :join, team
+                = link_to 'Join this team', join_hunt_team_path(@hunt, team), :class => 'btn', :method => :put
     - else
       %p No teams yet.
 
-    - if can? :create, HuntTeam.new(:hunt => @hunt)
+    - if can? :create, Team.new(:hunt => @hunt)
       = link_to 'New Team', new_hunt_team_path(@hunt), :class => 'btn'
 
   .span4
@@ -54,11 +54,11 @@
       %p No judges. How did that happen?
 
     %h2 Invites
-    - if @hunt.hunt_invitations.status_invited.size > 0
+    - if @hunt.invitations.status_invited.size > 0
       %table.table.table-hover
-        - @hunt.hunt_invitations.status_invited.each do |hunt_invitation|
+        - @hunt.invitations.status_invited.each do |invitation|
           %tr
-            %td= render :partial => 'shared/user', :locals => { :user => hunt_invitation.user }
+            %td= render :partial => 'shared/user', :locals => { :user => invitation.user }
     - else
       %p No invitations.
 

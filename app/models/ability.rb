@@ -41,7 +41,7 @@ class Ability
 
     # Can see hunts if you are a participant or you've been invited
     can :read, Hunt, :hunt_participants => { :user_id => user.id }
-    can :read, Hunt, :hunt_invitations => { :user_id => user.id, :status => :invited }
+    can :read, Hunt, :invitations => { :user_id => user.id, :status => :invited }
 
     # Only judges can update hunts
     can :update, Hunt, :hunt_participants => { :user_id => user.id, :status => :judge }
@@ -65,21 +65,21 @@ class Ability
     can :update, HuntParticipant, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
 
     # Judges can cancel any participant
-    can :cancel, HuntInvitation, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
+    can :cancel, Invitation, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
 
     # The user who created the invitation can cancel it
     # can :cancel, HuntInvitation, :invited_by => user.id
 
     # Only players can create teams
-    can :create, HuntTeam, :hunt => { :hunt_participants => { :user_id => user.id, :status => :player } }
+    can :create, Team, :hunt => { :hunt_participants => { :user_id => user.id, :status => :player } }
 
     # Only players can join teams
-    can :join, HuntTeam, :hunt => { :hunt_participants => { :user_id => user.id, :status => :player } }
+    can :join, Team, :hunt => { :hunt_participants => { :user_id => user.id, :status => :player } }
 
     # Can't join a team if the user is already on it
-    cannot :join, HuntTeam, :hunt_participants => { :user_id => user.id }
+    cannot :join, Team, :hunt_participants => { :user_id => user.id }
 
     # Can only edit a team if the player is on it
-    can :update, HuntTeam, :hunt_participants => { :user_id => user.id }
+    can :update, Team, :hunt_participants => { :user_id => user.id }
   end
 end

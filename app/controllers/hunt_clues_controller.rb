@@ -6,7 +6,7 @@ class HuntCluesController < ApplicationController
   # GET /clues.json
   def index
     @hunt = Hunt.find(params[:hunt_id])
-    @clues = Clue.where(:hunt_id => params[:hunt_id])
+    @clues = @hunt.clues
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,21 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
+    = link_to @clue.hunt.name, @clue.hunt
+    %span.divider /
+  %li
+    = link_to 'Clues', hunt_clues_path(@clue.hunt)
+    %span.divider /
+  %li
+    = link_to @clue.name, hunt_clue_path(@clue.hunt, @clue)
+    %span.divider /
+  %li.active New Submission
+
+%h1 New Clue Submission
+
+= simple_form_for @submission, :url => clue_submissions_path(@clue), :html => { :class => 'form-horizontal' } do |f|
+  = f.input :upload, :as => :file, :label => 'Upload', :autofocus => true
+  .form-actions
+    = f.submit :value => 'Save', :class => 'btn btn-primary'

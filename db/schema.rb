@@ -77,24 +77,32 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
   create_table "hunt_participants", :force => true do |t|
     t.integer "hunt_id", :null => false
     t.integer "user_id", :null => false
-    t.integer "hunt_team_id"
+    t.integer "team_id"
     t.integer "status_cd", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "hunt_teams", :force => true do |t|
+  create_table "teams", :force => true do |t|
     t.integer "hunt_id", :null => false
     t.string "name", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "hunt_invitations", :force => true do |t|
+  create_table "invitations", :force => true do |t|
     t.integer "hunt_id", :null => false
     t.integer "user_id", :null => false
     t.integer "status_cd", :null => false
     # t.integer "invited_by", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "submissions", :force => true do |t|
+    t.integer "user_id", :null => false
+    t.integer "clue_id", :null => false
+    t.string "upload", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

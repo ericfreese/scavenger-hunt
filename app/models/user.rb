@@ -17,8 +17,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  has_many :hunt_invitations
-  has_many :hunt_teams
+  has_many :invitations
+  has_many :teams
+  has_many :submissions
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation,

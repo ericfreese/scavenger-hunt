@@ -24,6 +24,7 @@ gem 'figaro'
 gem 'simple_enum'
 gem 'mail'
 gem 'carrierwave'
+gem 'rmagick', '2.13.2'
 gem 'fog'
 
 # Bundle edge Rails instead:

@@ -4,7 +4,7 @@ class HuntTeamsController < ApplicationController
 
   def index
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_teams = @hunt.hunt_teams
+    @teams = @hunt.teams
 
     respond_to do |format|
       format.html
@@ -14,22 +14,22 @@ class HuntTeamsController < ApplicationController
 
   def new
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_team = @hunt.hunt_teams.build
+    @team = @hunt.teams.build
 
     respond_to do |format|
       format.html
-      format.json { render json: @hunt_team }
+      format.json { render json: @team }
     end
   end
 
   def edit
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_team = @hunt.hunt_teams.find(params[:id])
+    @team = @hunt.teams.find(params[:id])
   end
 
   def show
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_team = @hunt.hunt_teams.find(params[:id])
+    @team = @hunt.teams.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,7 +39,7 @@ class HuntTeamsController < ApplicationController
 
   def create
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_team = @hunt.hunt_teams.build(params[:hunt_team])
+    @team = @hunt.teams.build(params[:team])
 
     respond_to do |format|
       if @hunt.save
@@ -54,24 +54,24 @@ class HuntTeamsController < ApplicationController
 
   def update
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_team = @hunt.hunt_teams.find(params[:id])
+    @team = @hunt.teams.find(params[:id])
 
     respond_to do |format|
-      if @hunt_team.update_attributes(params[:hunt_team])
-        format.html { redirect_to hunt_team_path(@hunt, @hunt_team), notice: 'Team was successfully updated.' }
+      if @team.update_attributes(params[:team])
+        format.html { redirect_to hunt_team_path(@hunt, @team), notice: 'Team was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @hunt_team.errors, status: :unprocessable_entity }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def join
     @hunt = Hunt.find(params[:hunt_id])
-    @hunt_team = @hunt.hunt_teams.find(params[:id])
+    @team = @hunt.teams.find(params[:id])
     @hunt_participant = current_user.hunt_participants.where(:hunt_id => @hunt.id).first
-    @hunt_participant.hunt_team = @hunt_team;
+    @hunt_participant.team = @team;
 
     respond_to do |format|
       if @hunt_participant.save

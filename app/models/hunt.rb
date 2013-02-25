@@ -18,8 +18,8 @@ class Hunt < ActiveRecord::Base
     end
   end
 
-  has_many :hunt_invitations
-  has_many :hunt_teams
+  has_many :invitations
+  has_many :teams
 
   validates_presence_of :name
 

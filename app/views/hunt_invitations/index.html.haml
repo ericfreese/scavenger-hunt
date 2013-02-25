@@ -12,6 +12,6 @@
     %tr
       %th Email
   %tbody
-    - @hunt_invitations.each do |hunt_invitation|
+    - @invitations.each do |invitation|
       %tr
-        %td= hunt_invitation.user.email
+        %td= invitation.user.email
