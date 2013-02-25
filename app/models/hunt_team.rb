@@ -3,7 +3,13 @@ class HuntTeam < ActiveRecord::Base
 
   belongs_to :hunt
   has_many :hunt_participants
-  has_many :users, :through => :hunt_participants
+  has_many :users, :through => :hunt_participants do
+    def players
+      where(:hunt_participants => {
+        :status_cd => HuntParticipant.player
+      })
+    end
+  end
 
   validates_presence_of :name
 

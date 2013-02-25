@@ -44,10 +44,26 @@ class HuntInvitationsController < ApplicationController
     @hunt = Hunt.find(params[:hunt_id])
     @hunt_invitation = @hunt.hunt_invitations.find(params[:id])
     @hunt.hunt_participants.build(:user => @hunt_invitation.user, :status => :player)
+    @hunt_invitation.status = :accepted
 
     respond_to do |format|
-      if @hunt.save
-        @hunt_invitation.delete
+      if @hunt.save && @hunt_invitation.save
+        format.html { redirect_to @hunt, notice: 'Invitation was successfully accepted.' }
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { redirect_to @hunt, alert: 'Failed to accept invitation.' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def decline
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_invitation = @hunt.hunt_invitations.find(params[:id])
+    @hunt_invitation.status = :declined
+
+    respond_to do |format|
+      if @hunt_invitation.save
         format.html { redirect_to @hunt, notice: 'Invitation was successfully accepted.' }
         format.json { render json: @user, status: :created, location: @user }
       else

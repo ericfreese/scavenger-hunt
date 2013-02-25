@@ -52,6 +52,21 @@ class HuntTeamsController < ApplicationController
     end
   end
 
+  def update
+    @hunt = Hunt.find(params[:hunt_id])
+    @hunt_team = @hunt.hunt_teams.find(params[:id])
+
+    respond_to do |format|
+      if @hunt_team.update_attributes(params[:hunt_team])
+        format.html { redirect_to hunt_team_path(@hunt, @hunt_team), notice: 'Team was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @hunt_team.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def join
     @hunt = Hunt.find(params[:hunt_id])
     @hunt_team = @hunt.hunt_teams.find(params[:id])

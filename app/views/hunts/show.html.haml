@@ -6,7 +6,9 @@
 
 .pull-right
   - if !@hunt_invitation.nil?
-    = link_to 'Accept Invitation', accept_hunt_invitation_path(@hunt, @hunt_invitation), :class => 'btn btn-success', :method => 'put'
+    Respond to invitation: 
+    = link_to 'Accept', accept_hunt_invitation_path(@hunt, @hunt_invitation), :class => 'btn btn-success', :method => 'put'
+    = link_to 'Decline', decline_hunt_invitation_path(@hunt, @hunt_invitation), :class => 'btn btn-danger', :method => 'put'
   - elsif can? :edit, @hunt
     - if can? :update, HuntParticipant.new(:hunt => @hunt)
       = link_to 'Manage Participants', edit_hunt_participants_path(@hunt), :class => 'btn'
@@ -30,7 +32,7 @@
                     = link_to edit_hunt_team_path(@hunt, hunt_team), :title => 'Edit' do
                       %i.icon-edit
               %table.table.table-hover
-                - hunt_team.users.each do |user|
+                - hunt_team.users.players.each do |user|
                   %tr
                     %td= render :partial => 'shared/user', :locals => { :user => user }
               - if can? :join, hunt_team

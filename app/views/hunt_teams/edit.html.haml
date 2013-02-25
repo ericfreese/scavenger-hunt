@@ -15,7 +15,7 @@
 
 %h1 Edit Team
 
-= simple_form_for @hunt_team, :url => hunt_teams_path(@hunt), :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @hunt_team, :url => hunt_team_path(@hunt, @hunt_team), :html => { :class => 'form-horizontal' } do |f|
   = f.input :name, :label => 'Name', :autofocus => true
   .form-actions
     = f.submit :value => 'Save', :class => 'btn btn-primary'

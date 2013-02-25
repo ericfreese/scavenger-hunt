@@ -12,7 +12,7 @@
           - case user.provider
             - when 'facebook'
               %i.icon-facebook-sign
-    - else
+    .user-badge-email
       %span.label= user.email
       
     - unless @hunt.nil?
