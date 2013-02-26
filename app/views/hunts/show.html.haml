@@ -10,88 +10,21 @@
     = link_to 'Accept', accept_hunt_invitation_path(@hunt, @invitation), :class => 'btn btn-success', :method => 'put'
     = link_to 'Decline', decline_hunt_invitation_path(@hunt, @invitation), :class => 'btn btn-danger', :method => 'put'
   - elsif can? :edit, @hunt
-    - if can? :update, HuntParticipant.new(:hunt => @hunt)
-      = link_to 'Manage Participants', edit_hunt_participants_path(@hunt), :class => 'btn'
     = link_to 'Edit Hunt', edit_hunt_path, :class => 'btn'
 
-%h1= @hunt.name
+%h1
+  = @hunt.name
+  - case @hunt.status
+    - when :forming
+      %span.label.label-info= @hunt.status
+    - when :live
+      %span.label.label-important= @hunt.status
+    - when :judging
+      %span.label.label-warning= @hunt.status
+    - when :completed
+      %span.label.label-success= @hunt.status
 
-.row-fluid
-
-  .span8
-    %h2 Teams
-    - if @hunt.teams.size > 0
-      - @hunt.teams.each_slice(2) do |team_row|
-        .row-fluid
-          - team_row.each do |team|
-            .span6
-              %h3
-                = team.name
-                %small
-                  - if can? :update, team
-                    = link_to edit_hunt_team_path(@hunt, team), :title => 'Edit' do
-                      %i.icon-edit
-              %table.table.table-hover
-                - team.users.players.each do |user|
-                  %tr
-                    %td= render :partial => 'shared/user', :locals => { :user => user }
-              - if can? :join, team
-                = link_to 'Join this team', join_hunt_team_path(@hunt, team), :class => 'btn', :method => :put
-    - else
-      %p No teams yet.
-
-    - if can? :create, Team.new(:hunt => @hunt)
-      = link_to 'New Team', new_hunt_team_path(@hunt), :class => 'btn'
-
-  .span4
-    %h2 Judges
-    - if @hunt.users.judges.size > 0
-      %table.table.table-hover
-        - @hunt.users.judges.each do |judge|
-          %tr
-            %td= render :partial => 'shared/user', :locals => { :user => judge }
-    - else
-      %p No judges. How did that happen?
-
-    %h2 Invites
-    - if @hunt.invitations.status_invited.size > 0
-      %table.table.table-hover
-        - @hunt.invitations.status_invited.each do |invitation|
-          %tr
-            %td= render :partial => 'shared/user', :locals => { :user => invitation.user }
-    - else
-      %p No invitations.
-
-    / %h2 Requests
-    / - if @hunt.users.requested.size > 0
-    /   %table.table.table-hover
-    /     - @hunt.users.requested.each do |requested|
-    /       %tr
-    /         %td= render :partial => 'shared/user', :locals => { :user => requested }
-    / - else
-    /   %p Nobody here.
-
-    = link_to 'Invite Someone', new_hunt_invitation_path(@hunt), :class => 'btn'
-
-.row-fluid
-  .span12
-    %h2 Clues
-    - if can? :read, Clue.new(:hunt => @hunt)
-      - if @hunt.clues.size > 0
-        %table.table.table-striped
-          %thead
-            %tr
-              %th Name
-              %th Points
-          - @hunt.clues.each do |clue|
-            %tr
-              %td
-                = link_to clue.name, hunt_clue_path(@hunt, clue)
-              %td= clue.point_value
-      - else
-        %p No clues!
-    - else
-      %p Not available until the hunt has started
-
-    - if can? :create, Clue.new(:hunt => @hunt)
-      = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
+- if current_user.is_judge_for @hunt
+  = render :partial => "hunts/judge/show_#{@hunt.status}.html.haml"
+- elsif current_user.is_player_for @hunt || !@invitation.nil?
+  = render :partial => "hunts/player/show_#{@hunt.status}.html.haml"

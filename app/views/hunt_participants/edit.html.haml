@@ -16,16 +16,10 @@
         - @hunt.errors.full_messages.each do |msg|
           %li= msg
   %table.table
-    %thead
-      %tr
-        %th Judge?
-        %th Email
-        %th Name
     %tbody
       = f.simple_fields_for :hunt_participants do |hpf|
         %tr
+          %td= render :partial => 'shared/user', :locals => { :user => hpf.object.user }
           %td= hpf.select :status, HuntParticipant.statuses.keys
-          %td= hpf.object.user.email
-          %td= hpf.object.user.name
   .form-actions
     = f.button :submit, "Save", :class => 'btn btn-primary'

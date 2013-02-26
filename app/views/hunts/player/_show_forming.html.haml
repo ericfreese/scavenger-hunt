@@ -1,0 +1,58 @@
+.row-fluid
+  .span3
+    .judges
+      %h2 Judges
+      - if @hunt.users.judges.size > 0
+        %table.table.table-hover
+          - @hunt.users.judges.each do |judge|
+            %tr
+              %td= render :partial => 'shared/user', :locals => { :user => judge }
+      - else
+        %p No judges. How did that happen?
+
+    .invitations
+      %h2 Invitations
+      - if @hunt.invitations.status_invited.size > 0
+        %table.table.table-hover
+          - @hunt.invitations.status_invited.each do |invitation|
+            %tr
+              %td= render :partial => 'shared/user', :locals => { :user => invitation.user }
+      - else
+        %p No invitations.
+        
+    = link_to 'Invite Someone', new_hunt_invitation_path(@hunt), :class => 'btn'
+
+    / %h2 Requests
+    / - if @hunt.users.requested.size > 0
+    /   %table.table.table-hover
+    /     - @hunt.users.requested.each do |requested|
+    /       %tr
+    /         %td= render :partial => 'shared/user', :locals => { :user => requested }
+    / - else
+    /   %p Nobody here.
+
+
+  .span9
+    %h2 Teams
+    - if @hunt.teams.size > 0
+      - @hunt.teams.each_slice(3) do |team_row|
+        .row-fluid
+          - team_row.each do |team|
+            .span4
+              %h3
+                = team.name
+                %small
+                  - if can? :update, team
+                    = link_to edit_hunt_team_path(@hunt, team), :title => 'Edit' do
+                      %i.icon-edit
+              %table.table.table-hover
+                - team.users.players.each do |user|
+                  %tr
+                    %td= render :partial => 'shared/user', :locals => { :user => user }
+              - if can? :join, team
+                = link_to 'Join this team', join_hunt_team_path(@hunt, team), :class => 'btn', :method => :put
+    - else
+      %p No teams yet.
+
+    - if can? :create, Team.new(:hunt => @hunt)
+      = link_to 'New Team', new_hunt_team_path(@hunt), :class => 'btn'

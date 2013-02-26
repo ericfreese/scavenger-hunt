@@ -1,5 +1,11 @@
 class Hunt < ActiveRecord::Base
-  attr_accessible :name, :hunt_participants_attributes, :is_live
+  attr_accessible :name, :hunt_participants_attributes, :status
+
+  as_enum :status,
+    :forming => 1,
+    :live => 2,
+    :judging => 3,
+    :completed => 4
 
   has_many :clues
 

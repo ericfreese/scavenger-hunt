@@ -53,7 +53,7 @@ class Ability
     can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id, :status => :judge } }
 
     # Participants can only view clues if hunt is live
-    can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id }, :is_live => true }
+    can :read, Clue, :hunt => { :hunt_participants => { :user_id => user.id }, :status => :live }
 
     # Only participants can invite people to a hunt
     can :create, User, :hunt => { :hunt_participants => { :user_id => user.id } }

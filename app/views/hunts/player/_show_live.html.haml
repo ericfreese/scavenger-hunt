@@ -1,0 +1,54 @@
+.row-fluid
+  .span3
+    .team-players
+      %h2 Your Team
+      %h3= current_user.team_for(@hunt).name
+      %table.table.table-hover
+        - current_user.team_for(@hunt).users.players.each do |player|
+          %tr
+            %td= render :partial => 'shared/user', :locals => { :user => player }
+
+    .judges
+      %h2 Judges
+      - if @hunt.users.judges.size > 0
+        %table.table.table-hover
+          - @hunt.users.judges.each do |judge|
+            %tr
+              %td= render :partial => 'shared/user', :locals => { :user => judge }
+      - else
+        %p No judges. How did that happen?
+
+  .span9
+    .clues
+      %h2 Clues
+      - if @hunt.clues.size > 0
+        - @hunt.clues.each do |clue|
+          .well
+            .row-fluid
+              .span4
+                %h4
+                  = clue.name
+                  %span.label.label-info= "#{clue.point_value} pts"
+                .clue-description= clue.description
+              .span8
+                - submissions = clue.submissions.where(:user_id => current_user.team_for(@hunt).users.collect(&:id))
+                - unless submissions.empty?
+                  - submissions.each_slice(2) do |submission_row|
+                    .row-fluid
+                      %ul.thumbnails
+                        - submission_row.each do |submission|
+                          %li.span6
+                            .thumbnail
+                              %img.img-rounded{ src: submission.upload.thumb }
+                              .caption
+                                .submitted-at
+                                  %i.icon-time
+                                  = "#{time_ago_in_words(submission.created_at)} ago"
+                                .submitted-by
+                                  %i.icon-user
+                                  = "By #{submission.user.name}"
+                = simple_form_for clue.submissions.build, :url => clue_submissions_path(clue) do |f|
+                  = f.input :upload, :as => :file, :label => false
+                  = f.submit :value => 'Upload Submission', :class => 'btn'
+      - else
+        %p No clues!

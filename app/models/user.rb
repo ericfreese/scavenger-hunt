@@ -28,6 +28,18 @@ class User < ActiveRecord::Base
 
   validates_presence_of :email, :name
 
+  def is_judge_for(hunt)
+    self.hunt_participants.exists? :hunt_id => hunt.id, :status_cd => HuntParticipant.judge
+  end
+
+  def is_player_for(hunt)
+    self.hunt_participants.exists? :hunt_id => hunt.id, :status_cd => HuntParticipant.player
+  end
+
+  def team_for(hunt)
+    self.hunt_participants.where(:hunt_id => hunt.id).first.team
+  end
+
   def self.find_for_facebook_oauth(auth, signed_in_resource = nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     user ||= User.create(

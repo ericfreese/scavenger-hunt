@@ -11,6 +11,6 @@
 
 = simple_form_for @hunt, :url => hunt_path(@hunt), :html => { :class => 'form-horizontal' } do |f|
   = f.input :name, :label => 'Name', :autofocus => true
-  = f.input :is_live, :label => 'Is Live?'
+  = f.input :status, :collection => Hunt.statuses.keys
   .form-actions
     = f.submit :value => 'Save', :class => 'btn btn-primary'

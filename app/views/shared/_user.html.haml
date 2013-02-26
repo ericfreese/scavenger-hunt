@@ -21,9 +21,10 @@
         .invitation
           %i.icon-envelope
           %small
-            = "Invitation sent #{time_ago_in_words(invitation.created_at)} ago"
-            - if can? :cancel, invitation
-              = link_to cancel_hunt_invitation_path(@hunt, invitation), :method => 'put', :confirm => 'Are you sure you want to cancel this invitation?', :class => 'label label-important' do
-                %i.icon-remove.icon-white
-                Cancel
+            = "Invited #{time_ago_in_words(invitation.created_at)} ago"
+        .invitation-actions
+          - if can? :cancel, invitation
+            = link_to cancel_hunt_invitation_path(@hunt, invitation), :method => 'put', :confirm => 'Are you sure you want to cancel this invitation?', :class => 'label label-important' do
+              %i.icon-remove.icon-white
+              Cancel
               

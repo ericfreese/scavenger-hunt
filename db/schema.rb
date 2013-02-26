@@ -25,20 +25,11 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
   add_index "clues", ["hunt_id"], :name => "index_clues_on_hunt_id"
 
   create_table "hunts", :force => true do |t|
-    t.string   "name"
-    t.boolean  "is_live",    :default => false
+    t.string   "name", :null => false
+    t.integer  "status_cd", :default => 1, :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "players", :force => true do |t|
-    t.string   "name"
-    t.integer  "team_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "players", ["team_id"], :name => "index_players_on_team_id"
 
   create_table "teams", :force => true do |t|
     t.string   "name"

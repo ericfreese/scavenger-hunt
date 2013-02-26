@@ -1,0 +1,74 @@
+.row-fluid
+  .span3
+    .judges
+      %h2 Judges
+      - if @hunt.users.judges.size > 0
+        %table.table.table-hover
+          - @hunt.users.judges.each do |judge|
+            %tr
+              %td= render :partial => 'shared/user', :locals => { :user => judge }
+      - else
+        %p No judges. How did that happen?
+
+    - if can? :update, HuntParticipant.new(:hunt => @hunt)
+      = link_to 'Manage Judges', edit_hunt_participants_path(@hunt), :class => 'btn btn-mini'
+
+    .invitations
+      %h2 Invitations
+      - if @hunt.invitations.status_invited.size > 0
+        %table.table.table-hover
+          - @hunt.invitations.status_invited.each do |invitation|
+            %tr
+              %td= render :partial => 'shared/user', :locals => { :user => invitation.user }
+      - else
+        %p No invitations.
+
+      = link_to 'Invite Someone', new_hunt_invitation_path(@hunt), :class => 'btn btn-mini'
+
+    .players
+      %h2 Players
+      - if @hunt.teams.size > 0
+        - @hunt.teams.each do |team|
+          - if team.users.players.size > 0
+            %h3= team.name
+            %table.table.table-hover
+              - team.users.players.each do |user|
+                %tr
+                  %td= render :partial => 'shared/user', :locals => { :user => user }
+      - else
+        %p No players.
+
+  .span9
+    .clues
+      %h2 Clues
+      - if @hunt.clues.size > 0
+        %table.table.table-hover
+          %thead
+            %tr
+              %th Points
+              %th Name
+              %th Description
+              %th
+          - @hunt.clues.each do |clue|
+            %tr
+              %td= clue.point_value
+              %td= link_to clue.name, hunt_clue_path(@hunt, clue)
+              %td= clue.description
+              %td
+                .pull-right
+                  = link_to edit_hunt_clue_path(@hunt, clue), :class => 'btn btn-mini' do
+                    %i.icon-edit.icon-large
+      - else
+        %p No clues!
+
+    - if can? :create, Clue.new(:hunt => @hunt)
+      = link_to 'Add Clue', new_hunt_clue_path(@hunt), :class => 'btn'
+
+    / %h2 Requests
+    / - if @hunt.users.requested.size > 0
+    /   %table.table.table-hover
+    /     - @hunt.users.requested.each do |requested|
+    /       %tr
+    /         %td= render :partial => 'shared/user', :locals => { :user => requested }
+    / - else
+    /   %p Nobody here.
