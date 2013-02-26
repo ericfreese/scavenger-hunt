@@ -5,7 +5,7 @@ gem 'rails', '3.2.12'
 
 gem 'pg', '0.13.2' # Postgres
 
-gem 'haml', '3.1.6'
+gem 'haml', '3.1.7'
 gem 'less-rails', '~> 2.2.6' # Less support
 gem 'sass'
 
