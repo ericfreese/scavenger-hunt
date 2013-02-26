@@ -18,93 +18,108 @@
 
 
   %body
-    .navbar.navbar-fluid-top
-      .navbar-inner
-        .container-fluid
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          = link_to 'Scavenger Hunt', root_path, :class => 'brand'
-          .container.nav-collapse
-            %ul.nav
-              / %li= link_to "Link 1", "/path1"
-              / %li= link_to "Link 2", "/path2"
-              / %li= link_to "Link 3", "/path3"
-            %ul.nav.pull-right
-              - if user_signed_in?
-                %li.dropdown
-                  %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
-                    %i.icon-calendar
-                    - if current_user.invitations.status_invited.size > 0
-                      %span.badge.badge-important= current_user.invitations.status_invited.size
-                  %ul.dropdown-menu
-                    - if current_user.invitations.status_invited.size > 0
-                      - current_user.invitations.status_invited.each do |invitation|
-                        %li= link_to "You have been invited to: #{invitation.hunt.name}", invitation.hunt
-                    - else
-                      %li= link_to 'No new invitations', '#'
-                    %li.divider
-                    %li
-                      %a{ href: '#' }
-                        See all invitations
-                %li.dropdown
-                  %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
-                    = current_user.name
-                    %b.caret
-                  %ul.dropdown-menu
-                    %li
-                      = link_to edit_user_registration_path do
-                        .user-badge
-                          .user-badge-image
-                            - if current_user.image.nil?
-                              %i.icon-user
-                            - else
-                              %img.media-object{ src: current_user.image }
-                          .user-badge-details
-                            %h4.media-heading= current_user.name
-                            - unless current_user.provider.nil?
-                              %small
-                                Signed in via
-                                - case current_user.provider
-                                  - when 'facebook'
-                                    %i.icon-facebook-sign
-                            - else
-                              %span.label= current_user.email
-                    %li.divider
-                    %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
-              - else
-                %li= link_to "Sign In", new_user_session_path
-                %li= link_to "Register", new_user_registration_path
+    .sticky-footer-wrapper
+      .navbar.navbar-fluid-top
+        .navbar-inner
+          .container-fluid
+            %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            = link_to 'Scavenger Hunt', root_path, :class => 'brand'
+            .container.nav-collapse.collapse
+              %ul.nav
+                / %li= link_to "Link 1", "/path1"
+                / %li= link_to "Link 2", "/path2"
+                / %li= link_to "Link 3", "/path3"
+              %ul.nav.pull-right
+                - if user_signed_in?
+                  %li.dropdown
+                    %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                      %i.icon-calendar
+                      - if current_user.invitations.status_invited.size > 0
+                        %span.badge.badge-important= current_user.invitations.status_invited.size
+                    %ul.dropdown-menu
+                      - if current_user.invitations.status_invited.size > 0
+                        - current_user.invitations.status_invited.each do |invitation|
+                          %li= link_to "You have been invited to: #{invitation.hunt.name}", invitation.hunt
+                      - else
+                        %li= link_to 'No new invitations', '#'
+                      %li.divider
+                      %li
+                        %a{ href: '#' }
+                          See all invitations
+                  %li.dropdown
+                    %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                      = current_user.name
+                      %b.caret
+                    %ul.dropdown-menu
+                      %li
+                        = link_to edit_user_registration_path do
+                          .user-badge
+                            .user-badge-image
+                              - if current_user.image.nil?
+                                %i.icon-user
+                              - else
+                                %img.img-rounded{ src: current_user.image }
+                            .user-badge-details
+                              %h4.media-heading= current_user.name
+                              - unless current_user.provider.nil?
+                                %small
+                                  Signed in via
+                                  - case current_user.provider
+                                    - when 'facebook'
+                                      %i.icon-facebook-sign
+                              - else
+                                %span.label= current_user.email
+                      %li.divider
+                      %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
+                - else
+                  %li= link_to "Sign In", new_user_session_path
+                  %li= link_to "Register", new_user_registration_path
 
-    .container-fluid
+      .container-fluid
 
-      .row-fluid
-        / .span3
-        /   .well.sidebar-nav
-        /     %ul.nav.nav-list
-        /       %li.nav-header Sidebar
-        /       %li= link_to "Link 1", "/path1"
-        /       %li= link_to "Link 2", "/path2"
-        /       %li= link_to "Link 3", "/path3"
-        .span12
-          - if !alert.nil?
-            .alert.alert-error
-              %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
-              = alert
-          - if !notice.nil?
-            .alert.alert-success
-              %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
-              = notice
+        .row-fluid
+          / .span3
+          /   .well.sidebar-nav
+          /     %ul.nav.nav-list
+          /       %li.nav-header Sidebar
+          /       %li= link_to "Link 1", "/path1"
+          /       %li= link_to "Link 2", "/path2"
+          /       %li= link_to "Link 3", "/path3"
+          .span12
+            - if !alert.nil?
+              .alert.alert-error
+                %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
+                = alert
+            - if !notice.nil?
+              .alert.alert-success
+                %button.close{ type: 'button', data: { dismiss: 'alert' } } &times;
+                = notice
 
-          - if content_for?(:breadcrumb)
-            %ul.breadcrumb
-              = yield :breadcrumb
+            - if content_for?(:breadcrumb)
+              %ul.breadcrumb
+                = yield :breadcrumb
 
-          = yield
-    
-      / %footer
-      /   %p &copy; Company 2012
+            = yield
+      
+        / %footer
+        /   %p &copy; Company 2012
+      
+      .sticky-footer-push
+
+    %footer.sticky-footer
+      .container-fluid
+        .row-fluid
+          .span12
+            .pull-left.muted
+              = link_to 'Scavenger Hunt', '/'
+              created by
+              = link_to 'Eric Freese', 'https://github.com/ericfreese'
+            .pull-right.muted
+              = link_to 'Donate', '#'
+
     /
       Javascripts
       \==================================================

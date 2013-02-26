@@ -35,11 +35,11 @@ class ClueSubmissionsController < ApplicationController
 
     respond_to do |format|
       if @submission.save
-        format.html { redirect_to hunt_clue_path(@clue.hunt, @clue), notice: 'Submission was successfully created.' }
+        format.html { redirect_to @clue.hunt, notice: 'Submission was successfully created.' }
         format.json { render json: @clue, status: :created, location: @clue }
       else
         format.html { render action: "new" }
-        format.json { render json: @clue.errors, status: :unprocessable_entity }
+        format.json { render json: @submission.errors, status: :unprocessable_entity }
       end
     end
   end
