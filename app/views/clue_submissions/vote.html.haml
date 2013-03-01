@@ -1,0 +1,55 @@
+- content_for :breadcrumb do
+  %li
+    = link_to 'Hunts', hunts_path
+    %span.divider /
+  %li
+    = link_to @clue.hunt.name, @clue.hunt
+    %span.divider /
+  %li
+    = link_to 'Clues', hunt_clues_path(@clue.hunt)
+    %span.divider /
+  %li
+    = link_to @clue.name, hunt_clue_path(@clue.hunt, @clue)
+    %span.divider /
+  %li.active Submissions
+
+%h1= "Submissions for #{@clue.name}"
+- @submissions.each do |team, team_submissions|
+  .well
+    .row-fluid
+      .span3
+        %h2= team.name
+      .span9
+        - team_submissions.each_slice(3) do |submission_row|
+          %ul.thumbnails
+            - submission_row.each do |submission|
+              %li.thumbnail.span4
+                %img.media-object.img-rounded{ src: submission.upload.thumb }
+                .caption
+                  .submitted-at
+                    %i.icon-time
+                    = "#{time_ago_in_words(submission.created_at)} ago"
+                  .submitted-by
+                    %i.icon-user
+                    = "By #{submission.user.name}"
+
+                  - if (vote = submission.vote_by_user(current_user)).nil?
+                    = simple_form_for submission.votes.build, :url => submission_votes_path(submission), :html => { :class => 'points' } do |f|
+                      - if @clue.standard?
+                        = f.input :active, :label => "Vote to award #{@clue.point_value} points?", :wrapper => :default
+                      - else
+                        = f.input :points, :label => "Vote", :collection => 1..4, :label_method => lambda { |points| %w{First Second Third Fourth}[points - 1] },:wrapper => :default
+                        
+                      = f.submit 'Submit vote', :class => 'btn btn-mini'
+
+                  - else
+                    = simple_form_for vote, :url => submission_vote_path(submission, vote), :html => { :class => 'points' } do |f|
+                      - if @clue.standard?
+                        = f.input :active, :label => "Vote to award #{@clue.point_value} points?", :wrapper => :default
+                      - else
+                        = f.input :points, :label => "Vote", :collection => 1..4, :label_method => lambda { |points| %w{First Second Third Fourth}[points - 1] },:wrapper => :default
+                        
+                      = f.submit 'Submit vote', :class => 'btn btn-mini'
+
+
+
