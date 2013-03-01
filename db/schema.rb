@@ -14,8 +14,9 @@
 ActiveRecord::Schema.define(:version => 20130216101203) do
 
   create_table "clues", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
+    t.string   "name", :null => false
+    t.integer "type_cd", :null => false
+    t.text     "description", :null => false
     t.integer  "point_value"
     t.integer  "hunt_id"
     t.datetime "created_at",  :null => false
@@ -94,6 +95,15 @@ ActiveRecord::Schema.define(:version => 20130216101203) do
     t.integer "user_id", :null => false
     t.integer "clue_id", :null => false
     t.string "upload", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "votes", :force => true do |t|
+    t.integer "submission_id", :null => false
+    t.integer "user_id", :null => false
+    t.string "points" # Only used if the clue is a competition type
+    t.boolean "active", :default => true
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

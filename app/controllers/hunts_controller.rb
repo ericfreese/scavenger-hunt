@@ -25,6 +25,8 @@ class HuntsController < ApplicationController
       :status_cd => Invitation.invited
     ).first
 
+    @submissions = Submission.where(:clue_id => @hunt.clues.collect(&:id)).order('created_at DESC')
+
     respond_to do |format|
       format.html
       format.json { render json: @hunt }

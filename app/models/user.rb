@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :invitations
   has_many :teams
   has_many :submissions
+  has_many :votes
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation,

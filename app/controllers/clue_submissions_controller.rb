@@ -1,14 +1,4 @@
 class ClueSubmissionsController < ApplicationController
-  def index
-    @clue = Clue.find(params[:clue_id])
-    @submissions = @clue.submissions
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @submissions }
-    end
-  end
-
   def show
     @hunt = Hunt.find(params[:hunt_id])
     @clue = Clue.find(params[:id])
@@ -41,6 +31,16 @@ class ClueSubmissionsController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @submission.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def vote
+    @clue = Clue.find(params[:clue_id])
+    @submissions = Submission.where(:clue_id => @clue.id).group_by{ |s| s.team }
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @submissions }
     end
   end
 end

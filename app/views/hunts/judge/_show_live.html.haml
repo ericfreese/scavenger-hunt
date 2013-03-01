@@ -24,27 +24,27 @@
         %p No players.
 
   .span9
-    .clues
-      %h2 Clues
-      - if @hunt.clues.size > 0
-        %table.table.table-hover
-          %thead
-            %tr
-              %th Points
-              %th Name
-              %th Description
-              %th
-          - @hunt.clues.each do |clue|
-            %tr
-              %td= clue.point_value
-              %td= link_to clue.name, hunt_clue_path(@hunt, clue)
-              %td= clue.description
-              %td
-                .pull-right
-                  = link_to edit_hunt_clue_path(@hunt, clue), :class => 'btn btn-mini' do
-                    %i.icon-edit.icon-large
+    .submissions
+      %h2 Recent Submissions
+      - unless @submissions.empty?
+        - @submissions.each_slice(4) do |submission_row|
+          .row-fluid
+            %ul.thumbnails
+              - submission_row.each do |submission|
+                %li.thumbnail.span3
+                  %img.media-object.img-rounded{ src: submission.upload.thumb }
+                  .caption
+                    .submitted-for
+                      For
+                      =link_to submission.clue.name, clue_submissions_path(submission.clue)
+                    .submitted-at
+                      %i.icon-time
+                      = "#{time_ago_in_words(submission.created_at)} ago"
+                    .submitted-by
+                      %i.icon-user
+                      = "By #{submission.user.name}"
       - else
-        %p No clues!
+        %p No submissions!
 
     / %h2 Requests
     / - if @hunt.users.requested.size > 0

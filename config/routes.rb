@@ -22,6 +22,7 @@ ScavengerHunt::Application.routes.draw do
         put 'cancel'
       end
     end
+
     resources :participants, :controller => 'hunt_participants' do
       collection do
         get :edit
@@ -31,7 +32,15 @@ ScavengerHunt::Application.routes.draw do
   end
 
   resources :clues do
-    resources :submissions, :controller => 'clue_submissions'
+    resources :submissions, :controller => 'clue_submissions' do
+      collection do
+        get :vote
+      end
+    end
+  end
+
+  resources :submissions do
+    resources :votes, :controller => 'submission_votes'
   end
 
   root :to => 'home#index';
