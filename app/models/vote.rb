@@ -3,6 +3,4 @@ class Vote < ActiveRecord::Base
 
   belongs_to :submission
   belongs_to :user
-
-  validates_presence_of :points if submission.clue.competition?
 end
